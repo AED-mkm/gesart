@@ -2,6 +2,7 @@ package org.gesart.gesart.web.Parametrage;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 import org.gesart.gesart.service.Parametrage.ParametreService;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ParametrageResource {
 	private final ParametreService parametreService;
-
-
 	/**
 	 * Create mag response entity.
 	 *
@@ -58,6 +57,40 @@ public class ParametrageResource {
 	@GetMapping("/magasins")
 	public ResponseEntity<List<MagasinDto>> listeMagasins() {
 		return new ResponseEntity<>(parametreService.fetchMagasins(), HttpStatus.OK);
+	}
+
+	/**
+	 * Create mag response entity.
+	 *
+	 * @param dto the dto
+	 * @return the response entity
+	 */
+	@PostMapping(path = "/banque")
+	public ResponseEntity<BanqueDto> createMag(
+			@Valid @RequestBody final BanqueDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
+	}
+
+	/**
+	 * Update mag response entity.
+	 *
+	 * @param dto the dto
+	 * @return the response entity
+	 */
+	@PutMapping(path = "/banques")
+	public ResponseEntity<BanqueDto> updateMag(
+			@Valid @RequestBody final BanqueDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
+	}
+
+	/**
+	 * Liste magasins response entity.
+	 *
+	 * @return the response entity
+	 */
+	@GetMapping("/banques")
+	public ResponseEntity<List<BanqueDto>> listeBanques() {
+		return new ResponseEntity<>(parametreService.fetchBanques(), HttpStatus.OK);
 	}
 
 }
