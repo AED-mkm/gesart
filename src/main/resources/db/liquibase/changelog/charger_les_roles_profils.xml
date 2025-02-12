@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+>
+
+    <changeSet  author="Wendkouny" id="202001221550">
+        <createTable tableName="profil_authority">
+            <column name="profil_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <loadData
+                file="db/liquibase/data/roles_profils.csv"
+                separator=";"
+                tableName="profil_authority">
+            <column name="profil_id" type="numeric"/>
+        </loadData>
+    </changeSet>
+
+
+</databaseChangeLog>

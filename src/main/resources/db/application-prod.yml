@@ -1,0 +1,18 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gestart
+    username: admin_gestart
+    password: admin@gestart
+    initialization-mode: always
+    continue-on-error: true
+    platform: postgres
+  liquibase:
+    contexts: prod
+    enabled: false
+
+sicomm:
+  mail:
+  # base-url: https://www.kossnaana.com

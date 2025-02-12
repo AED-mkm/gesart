@@ -1,0 +1,21 @@
+name;description;created_by;created_date;statut
+ROLE_ADMIN;Administrateur système;system;2021-09-06 00:29:39;ACTIF
+ROLE_USER;Rôle par defaut;system;2021-09-06 00:29:39;ACTIF
+ROLE_SECRETAIRE;Réservé aux sécrétaire;system;2021-09-06 00:29:39;ACTIF
+ROLE_CAISSIER;Réservé aux caissiers;system;2021-09-06 00:29:39;ACTIF
+ROLE_PROPRIETAIRE;Réservé aux proprietaire;system;2021-09-06 00:29:39;ACTIF
+ROLE_VENTE;Rôle pour effectuer une vente;system;2021-09-06 00:29:39;ACTIF
+ROLE_COMMANDE;Rôle pour effectuer une commande;system;2021-09-06 00:29:39;ACTIF
+ROLE_LIVRAISON;Rôle pour effectuer une livraison;system;2021-09-06 00:29:39;ACTIF
+ROLE_RECOUVREMENT_VENTE;Rôle pour effectuer une recouvrement de livraison;system;2021-09-06 00:29:39;ACTIF
+ROLE_TRANSFERT;Rôle pour effectuer un transfert de produits;system;2021-09-06 00:29:39;ACTIF
+ROLE_RECEPTION_PRODUIT;Rôle pour receptionner un transfert de produits;system;2021-09-06 00:29:39;ACTIF
+ROLE_CONSULTATION;Rôle pour receptionner une consultation;system;2021-09-06 00:29:39;ACTIF
+ROLE_STATISTIQUE;Rôle pour visualisation des statistiques;system;2021-09-06 00:29:39;ACTIF
+ROLE_GESTION_USER;Rôle pour gerer les utilisateurs;system;2021-09-06 00:29:39;ACTIF
+ROLE_GESTION_CAISSIER;Rôle pour gerer les utilisateur caissier;system;2021-09-06 00:29:39;ACTIF
+ROLE_GESTION_EXERCICE;Rôle pour gerer les exercice;system;2021-09-06 00:29:39;ACTIF
+ROLE_GESTION_PRODUIT;Rôle pour gerer des produit;system;2021-09-06 00:29:39;ACTIF
+ROLE_GESTION_CLIENT_FOUR;Rôle pour gerer des produit;system;2021-09-06 00:29:39;ACTIF
+ROLE_DEPENSE;Rôle pour gerer les dépenses;system;2021-09-06 00:29:39;ACTIF
+ROLE_ABONNEMENT;Rôle pour gerer les abnnements;system;2021-09-06 00:29:39;ACTIF

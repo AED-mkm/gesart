@@ -1,0 +1,89 @@
+spring:
+  resources:
+    add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  messages:
+  #basename: i18n/message
+  banner:
+  #location: banner.txt
+  profiles:
+    active: dev
+  application:
+    name: gesart
+  devtools:
+    add-properties: true
+    restart:
+      enabled: false
+
+  output:
+    ansi:
+      enabled: DETECT
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: admin_gestart
+    password: admin@gestart
+    protocol: smtp
+    default-encoding: UTF-8
+    test-connection: false
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            ssl:
+              trust: smtp.gmail.com
+      management:
+        health:
+          mail:
+            enabled: false
+  main:
+    allow-circular-references: true
+    #web-application-type=none: none
+    allow-bean-definition-overriding: true
+server:
+  error:
+    whitelabel:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    bf.gestion.si.comm: DEBUG
+    org.hibernate: ERROR
+    org: INFO
+    root: WARN
+
+#
+jwt:
+  security:
+    jwt-token: MmY0ZjA0ZGJmYjE0MGY3NjU4YjQ5ZGQ5N2ZlYzVlODBhZDI3MjFkYzJlYjNlZWFkNTc0Yzc1ZjQ2YTMzNjQ5ZGZhMTY2MWI5OGIxMDgxOTg1NzlhMjkxZjY4ODM4ODA3ODhmODBmYmMwNjJlMDdiOGI3YzQ3NWUzOTI4NzYxODE
+    #jwt-expiraton-ms: 86400000
+    jwt-expiraton-ms: 86400
+    #jwt-refresh-expiration-ms: 86400000
+    jwt-refresh-expiration-ms: 43200000
+    token-validity-in-seconds-for-remember-me: 2592000
+
