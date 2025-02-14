@@ -12,6 +12,12 @@ spring:
   liquibase:
    contexts: dev
    enabled: true
+  doc:
+    swagger-ui:
+      path: /swagger-ui.html
+    api-docs:
+      enabled: true
+      path: /v3/api-docs
 #sicomm:
 #  mail:
 #    base-url: http://localhost:4200

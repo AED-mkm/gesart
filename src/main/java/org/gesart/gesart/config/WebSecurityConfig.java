@@ -114,6 +114,7 @@ public class WebSecurityConfig {
                             "/api/verif-token-validite",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
+                            "/webjars/**",
                             "/swagger-ui.html"
                     ).permitAll();
                     auth.anyRequest().authenticated();

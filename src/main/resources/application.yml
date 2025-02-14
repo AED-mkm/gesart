@@ -15,7 +15,6 @@ spring:
     add-properties: true
     restart:
       enabled: false
-
   output:
     ansi:
       enabled: DETECT
@@ -86,4 +85,3 @@ jwt:
     #jwt-refresh-expiration-ms: 86400000
     jwt-refresh-expiration-ms: 43200000
     token-validity-in-seconds-for-remember-me: 2592000
-

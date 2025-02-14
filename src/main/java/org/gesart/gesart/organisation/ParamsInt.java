@@ -1,5 +1,6 @@
 package org.gesart.gesart.organisation;
 
+import org.gesart.gesart.domain.Client;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.FournisseurDto;
@@ -7,6 +8,7 @@ import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 import org.gesart.gesart.dto.parametrage.SuccursaleDto;
 import org.gesart.gesart.dto.parametrage.ProduitDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -35,8 +37,17 @@ public interface ParamsInt {
 	 */
 	List<ClientDto> fetchClients();
 
-	/**
-	 * .
+	/**.
+	 * Pagination des listes
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return ClientDto
+	 */
+
+	Page<Client> findPage(int pageNo, int pageSize, String sortBy);
+
+	/**.
 	 * creation et mise à jour des banque
 	 *
 	 * @param dto

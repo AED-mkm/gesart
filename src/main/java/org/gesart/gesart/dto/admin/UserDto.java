@@ -48,13 +48,13 @@ public class UserDto {
     @Size(min = 2, max = 10)
     private String langKey;
 
-    private byte[] photo;
+  //  private byte[] photo;
 
     private String nom;
 
     private String prenom;
 
-    private Boolean hasPhoto = Boolean.FALSE;
+  //  private Boolean hasPhoto = Boolean.FALSE;
 
     private Long profilId;
 
@@ -64,7 +64,7 @@ public class UserDto {
 
     private Boolean resetPassword = Boolean.FALSE;
 
-    private Boolean proprietaire = Boolean.FALSE;
+    private Boolean responsable = Boolean.FALSE;
 
     private Long defaultMagasinId;
 

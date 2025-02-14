@@ -57,7 +57,7 @@ public class UserResource {
      * @throws ResponseStatusException 400 (Bad Request) if the login or email is already in use
      */
     @PostMapping("/users/register")
-    //@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     @Operation(summary = "Endpoint permettant de creer un utilisateur.",
             tags = {"account", "login", "POST", "user", "register"},
             responses = {@ApiResponse(responseCode = "200", description = "Lorsque la création réussie"),

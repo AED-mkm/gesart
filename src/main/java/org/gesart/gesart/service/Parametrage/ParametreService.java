@@ -26,6 +26,10 @@ import org.gesart.gesart.repository.Parametrage.TypeClientRepository;
 import org.gesart.gesart.repository.Parametrage.BanqueRepository;
 import org.gesart.gesart.repository.Parametrage.MagasinRepository;
 import org.gesart.gesart.repository.Parametrage.ProduitRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,6 +91,23 @@ public class ParametreService implements ParamsInt {
 	public List<ClientDto> fetchClients() {
 		return clientRepository.findAll().stream().map(client ->
 				mapper.map(client, ClientDto.class)).collect(Collectors.toList());
+	}
+
+
+	/**
+	 * .
+	 * Liste des clients par page
+	 *
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return PosteDto
+	 */
+	@Override
+	public Page<Client> findPage(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return clientRepository.findAll(pageable);
 	}
 
 	/**
@@ -331,4 +352,6 @@ public class ParametreService implements ParamsInt {
 		return typeClientRepository.findAll().stream().map(typeClient ->
 				mapper.map(typeClient, TypeClientDto.class)).collect(Collectors.toList());
 	}
+
+
 }
