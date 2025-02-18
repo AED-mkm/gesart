@@ -1,6 +1,7 @@
 package org.gesart.gesart.organisation;
 
 import org.gesart.gesart.domain.Client;
+import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.FournisseurDto;
@@ -8,6 +9,7 @@ import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 import org.gesart.gesart.dto.parametrage.SuccursaleDto;
 import org.gesart.gesart.dto.parametrage.ProduitDto;
+import org.gesart.gesart.dto.parametrage.TypeReglDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -192,4 +194,44 @@ public interface ParamsInt {
 	 * @return List<TypeClientDto>
 	 */
 	List<TypeClientDto> fetchTypeClient();
+
+	/**.
+	 * @param dto
+	 * @return TaxeDto
+	 */
+	TaxeDto createAndUpdateTaxes(TaxeDto dto);
+
+	/**
+	 * .
+	 * supprimer une taxe
+	 *
+	 * @param id
+	 */
+	void deleteTaxe(Long id);
+
+	/**.
+	 * liste des taxes
+	 *
+	 * @return List<TaxeDto>
+	 */
+	List<TaxeDto> fetchTaxes();
+
+	/**.
+	 * @param dto
+	 * @return TypeReglDto
+	 */
+
+	TypeReglDto createAndUpdateTypeRegl(TypeReglDto dto);
+
+	/**.
+	 * @param id
+	 */
+	void deletetyperegl(Long id);
+
+	/**.
+	 *
+	 * @return List<TypeReglDto>
+	 */
+	List<TypeReglDto> fetchTypeRegl();
+
 }

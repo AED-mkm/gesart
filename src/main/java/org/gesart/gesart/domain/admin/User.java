@@ -30,12 +30,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.Table;
 
 
 import java.time.Instant;
-import java.util.List;
+
 
 /**
  * @author Moctar
@@ -103,8 +103,8 @@ public class User extends AbstractAuditEntity {
     @Column(name = "lang_key", length = 10)
     private String langKey;
 
-    @OneToMany
-    private List<Magasin> magasins;
+ /*   @OneToMany
+    private List<Magasin> magasins;*/
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -124,6 +124,8 @@ public class User extends AbstractAuditEntity {
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Magasin magasin;
+
+
 
 
 }

@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.gesart.gesart.config.SecurityConstants;
+import org.gesart.gesart.dto.parametrage.MagasinDto;
 
 
 import java.time.Instant;
@@ -64,9 +65,13 @@ public class UserDto {
 
     private Boolean resetPassword = Boolean.FALSE;
 
-    private Boolean responsable = Boolean.FALSE;
+   // private Boolean proprietaire = Boolean.FALSE;
 
-    private Long defaultMagasinId;
+    //private Long magasinId;
+
+    private MagasinDto magasin = new MagasinDto();
+
+    //private Long defaultMagasinId;
 
     private Boolean superAdmin = Boolean.FALSE;
 

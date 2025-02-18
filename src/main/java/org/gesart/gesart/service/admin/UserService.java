@@ -75,12 +75,12 @@ public class UserService {
                                 "L'adresse email est déjà utilisée");
                     }
                 });
-      /* if (userDTO.getDefaultMagasinId() != null && userDTO.getProprietaire()) {
-            Optional<User> userOptional = userRepository.findProprietaire(TypeStatut.ACTIF.name(),
+       /*if (userDTO.getDefaultMagasinId() != null && userDTO.getProprietaire()) {
+            Optional<User> userOptional = userRepository.findProprietaire(TypeStatut.valueOf(TypeStatut.ACTIF.name()),
                     userDTO.getDefaultMagasinId());
             if (userOptional.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
-                        "Il existe déjà  un proprietaire pour la boutique sélectionnée");
+                        "Il existe déjà  un responsable pour le magasin selectionné sélectionnée");
             }
         }*/
 
@@ -90,8 +90,10 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         newUser.setStatut(TypeStatut.ACTIF);
         newUser = userRepository.save(newUser);
+        newUser.setMagasin(newUser.getMagasin());
         //newUser.setInfo(generatePassword);
        // mailService.sendCreationEmail(newUser);
+
     }
 
     /**

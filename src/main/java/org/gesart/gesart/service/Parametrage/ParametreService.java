@@ -9,23 +9,29 @@ import org.gesart.gesart.domain.Banque;
 import org.gesart.gesart.domain.Produit;
 import org.gesart.gesart.domain.Magasin;
 import org.gesart.gesart.domain.Succursale;
+import org.gesart.gesart.domain.Taxe;
 import org.gesart.gesart.domain.TypeClient;
 import org.gesart.gesart.domain.Fournisseur;
+import org.gesart.gesart.domain.TypeReglement;
 import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.ProduitDto;
 import org.gesart.gesart.dto.parametrage.FournisseurDto;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 import org.gesart.gesart.dto.parametrage.SuccursaleDto;
+import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
+import org.gesart.gesart.dto.parametrage.TypeReglDto;
 import org.gesart.gesart.organisation.ParamsInt;
 import org.gesart.gesart.repository.Parametrage.SuccursaleRepository;
 import org.gesart.gesart.repository.Parametrage.ClientRepository;
 import org.gesart.gesart.repository.Parametrage.FournisseurRepository;
+import org.gesart.gesart.repository.Parametrage.TaxeRepository;
 import org.gesart.gesart.repository.Parametrage.TypeClientRepository;
 import org.gesart.gesart.repository.Parametrage.BanqueRepository;
 import org.gesart.gesart.repository.Parametrage.MagasinRepository;
 import org.gesart.gesart.repository.Parametrage.ProduitRepository;
+import org.gesart.gesart.repository.Parametrage.TypeReglRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +57,8 @@ public class ParametreService implements ParamsInt {
 	private final ProduitRepository produitRepository;
 	private final SuccursaleRepository succursaleRepository;
 	private final TypeClientRepository typeClientRepository;
+	private final TaxeRepository taxeRepository;
+	private final TypeReglRepository typeReglRepository;
 
 	/**
 	 * .
@@ -353,5 +361,82 @@ public class ParametreService implements ParamsInt {
 				mapper.map(typeClient, TypeClientDto.class)).collect(Collectors.toList());
 	}
 
+	/**.
+	 * @param dto
+	 *
+	 * @return TaxeDto
+	 */
+	@Override
+	public TaxeDto createAndUpdateTaxes(final TaxeDto dto) {
+		Taxe entity = mapper.map(dto, Taxe.class);
+		entity = taxeRepository.save(entity);
+		return mapper.map(entity, TaxeDto.class);
+	}
+
+	/**.
+	 * supprimer une taxe
+	 *
+	 * @param id
+	 */
+	@Override
+	public void deleteTaxe(final Long id) {
+		if (id == null) {
+			log.error("taxe n'existe pas !");
+			return;
+		}
+		taxeRepository.deleteById(id);
+
+	}
+
+	/**.
+	 * liste des taxes
+	 *
+	 * @return List<TaxeDto>
+	 */
+	@Override
+	public List<TaxeDto> fetchTaxes() {
+		return taxeRepository.findAll().stream().map(taxe ->
+				mapper.map(taxe, TaxeDto.class)).collect(Collectors.toList());
+	}
+
+
+	/**.
+	 *
+	 * @param dto
+	 * @return TypeReglDto
+	 */
+
+
+	public TypeReglDto createAndUpdateTypeRegl(final TypeReglDto dto) {
+		TypeReglement entity = mapper.map(dto, TypeReglement.class);
+		entity = typeReglRepository.save(entity);
+		return mapper.map(entity, TypeReglDto.class);
+	}
+
+	/**
+	 * .
+	 *
+	 * @param id
+	 */
+	@Override
+	public void deletetyperegl(final Long id) {
+		if (id == null) {
+			log.error("taxe n'existe pas !");
+			return;
+		}
+		typeReglRepository.deleteById(id);
+
+	}
+
+	/**
+	 * .
+	 *
+	 * @return List<TypeReglDto>
+	 */
+	@Override
+	public List<TypeReglDto> fetchTypeRegl() {
+		return taxeRepository.findAll().stream().map(taxe ->
+				mapper.map(taxe, TypeReglDto.class)).collect(Collectors.toList());
+	}
 
 }

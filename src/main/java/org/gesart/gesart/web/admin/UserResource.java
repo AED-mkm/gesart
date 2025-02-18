@@ -154,7 +154,7 @@ public class UserResource {
      * @return Profil
      */
     @GetMapping("/users/profils")
-    // @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     @Operation(summary = "Endpoint pour recuperer l'enesemble des profils des utilisateurs.", tags = {"account",
             "GET", "profils"}, responses = {
             @ApiResponse(responseCode = "200", description = "Lorsque le changement du mot de passe reussie"),

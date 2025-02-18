@@ -8,7 +8,9 @@ import org.gesart.gesart.dto.parametrage.FournisseurDto;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 import org.gesart.gesart.dto.parametrage.ProduitDto;
 import org.gesart.gesart.dto.parametrage.SuccursaleDto;
+import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
+import org.gesart.gesart.dto.parametrage.TypeReglDto;
 import org.gesart.gesart.service.Parametrage.ParametreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -302,6 +304,72 @@ public class ParametrageResource {
 	@GetMapping("/fournisseur")
 	public ResponseEntity<List<FournisseurDto>> listeFournisseurs() {
 		return new ResponseEntity<>(parametreService.fetchFournisseurs(), HttpStatus.OK);
+	}
+
+	/**.
+	 * @param dto
+	 * @return TaxeDto
+	 */
+
+	@PostMapping(path = "/taxe")
+	public ResponseEntity<TaxeDto> createTaxe(
+			@Valid @RequestBody final TaxeDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
+	}
+
+	/**.
+	 * update taxes
+	 * @param dto
+	 * @return the response entity
+	 */
+
+	@PutMapping(path = "/taxe")
+	public ResponseEntity<TaxeDto> updateFours(
+			@Valid @RequestBody final TaxeDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
+	}
+
+	/**.
+	 * retourne une taxe
+	 * @return TaxeDto
+	 */
+
+	@GetMapping("/taxe")
+	public ResponseEntity<List<TaxeDto>> listeTaxes() {
+		return new ResponseEntity<>(parametreService.fetchTaxes(), HttpStatus.OK);
+	}
+
+	/**.
+	 * @param dto
+	 * @return TypeReglDto
+	 */
+
+	@PostMapping(path = "/type_reglement")
+	public ResponseEntity<TypeReglDto> createTyperegl(
+			@Valid @RequestBody final TypeReglDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
+	}
+
+	/**.
+	 *
+	 * @param dto
+	 * @return the response entity
+	 */
+
+	@PutMapping(path = "/type_reglement")
+	public ResponseEntity<TypeReglDto> update(
+			@Valid @RequestBody final TypeReglDto dto) {
+		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
+	}
+
+	/**.
+	 *
+	 * @return  TypeReglDto
+	 */
+
+	@GetMapping("/type_reglement")
+	public ResponseEntity<List<TypeReglDto>> liste() {
+		return new ResponseEntity<>(parametreService.fetchTypeRegl(), HttpStatus.OK);
 	}
 
 }

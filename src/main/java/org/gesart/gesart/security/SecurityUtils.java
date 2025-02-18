@@ -7,10 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
-/**
- * @author : <a href="siguizana08@gmail.com"> BRAHIMA TRAORE </a>.
- * @version : 1.0
- **/
+
 
 @Slf4j
 public final class SecurityUtils {

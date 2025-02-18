@@ -83,4 +83,5 @@ public interface UserRepository extends AbstractRepository<User, Long> {
      */
     Optional<User> findByStatutAndActivationKey(TypeStatut statut, String activationKey);
 
+
 }
