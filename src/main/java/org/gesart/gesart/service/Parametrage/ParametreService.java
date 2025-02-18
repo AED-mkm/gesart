@@ -159,6 +159,19 @@ public class ParametreService implements ParamsInt {
 				mapper.map(banque, BanqueDto.class)).collect(Collectors.toList());
 	}
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+	@Override
+	public Page<Banque> findPageBanque(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return banqueRepository.findAll(pageable);
+	}
+
 	/**
 	 * .
 	 * creation et mise à jour des fournisseurs
@@ -198,6 +211,20 @@ public class ParametreService implements ParamsInt {
 	public List<FournisseurDto> fetchFournisseurs() {
 		return fournisseurRepository.findAll().stream().map(fournisseur ->
 				mapper.map(fournisseur, FournisseurDto.class)).collect(Collectors.toList());
+	}
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<Fournisseur> findPageFourn(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return fournisseurRepository.findAll(pageable);
 	}
 
 	/**
@@ -241,6 +268,20 @@ public class ParametreService implements ParamsInt {
 				mapper.map(magasin, MagasinDto.class)).collect(Collectors.toList());
 	}
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<Magasin> findPageMagasin(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return magasinRepository.findAll(pageable);
+	}
+
 	/**
 	 * .
 	 *
@@ -279,6 +320,20 @@ public class ParametreService implements ParamsInt {
 	public List<ProduitDto> fetchProduits() {
 		return produitRepository.findAll().stream().map(produit ->
 				mapper.map(produit, ProduitDto.class)).collect(Collectors.toList());
+	}
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<Produit> findPageProduit(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return produitRepository.findAll(pageable);
 	}
 
 	/**
@@ -321,6 +376,20 @@ public class ParametreService implements ParamsInt {
 				mapper.map(succursale, SuccursaleDto.class)).collect(Collectors.toList());
 	}
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<Succursale> findPageSuccursale(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return succursaleRepository.findAll(pageable);
+	}
+
 	/**
 	 * .
 	 *
@@ -348,7 +417,6 @@ public class ParametreService implements ParamsInt {
 		}
 		typeClientRepository.deleteById(id);
 	}
-
 	/**
 	 * .
 	 * liste des TypeClients
@@ -359,6 +427,20 @@ public class ParametreService implements ParamsInt {
 	public List<TypeClientDto> fetchTypeClient() {
 		return typeClientRepository.findAll().stream().map(typeClient ->
 				mapper.map(typeClient, TypeClientDto.class)).collect(Collectors.toList());
+	}
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<TypeClient> findPageTypeClient(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return typeClientRepository.findAll(pageable);
 	}
 
 	/**.
@@ -399,14 +481,26 @@ public class ParametreService implements ParamsInt {
 				mapper.map(taxe, TaxeDto.class)).collect(Collectors.toList());
 	}
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<Taxe> findPageTaxe(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return taxeRepository.findAll(pageable);
+	}
+
 
 	/**.
 	 *
 	 * @param dto
 	 * @return TypeReglDto
 	 */
-
-
 	public TypeReglDto createAndUpdateTypeRegl(final TypeReglDto dto) {
 		TypeReglement entity = mapper.map(dto, TypeReglement.class);
 		entity = typeReglRepository.save(entity);
@@ -435,8 +529,22 @@ public class ParametreService implements ParamsInt {
 	 */
 	@Override
 	public List<TypeReglDto> fetchTypeRegl() {
-		return taxeRepository.findAll().stream().map(taxe ->
+		return typeReglRepository.findAll().stream().map(taxe ->
 				mapper.map(taxe, TypeReglDto.class)).collect(Collectors.toList());
+	}
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return
+	 */
+
+	@Override
+	public Page<TypeReglement> findPageTypeRegl(final int pageNo, final int pageSize, final String sortBy) {
+		Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		return typeReglRepository.findAll(pageable);
 	}
 
 }

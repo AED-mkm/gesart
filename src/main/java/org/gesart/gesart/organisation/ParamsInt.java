@@ -1,6 +1,14 @@
 package org.gesart.gesart.organisation;
 
+import org.gesart.gesart.domain.Banque;
 import org.gesart.gesart.domain.Client;
+import org.gesart.gesart.domain.Fournisseur;
+import org.gesart.gesart.domain.Magasin;
+import org.gesart.gesart.domain.Produit;
+import org.gesart.gesart.domain.Succursale;
+import org.gesart.gesart.domain.Taxe;
+import org.gesart.gesart.domain.TypeClient;
+import org.gesart.gesart.domain.TypeReglement;
 import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
@@ -73,6 +81,15 @@ public interface ParamsInt {
 	 */
 	List<BanqueDto> fetchBanques();
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<BanqueDto>
+	 */
+
+	Page<Banque> findPageBanque(int pageNo, int pageSize, String sortBy);
+
 	/**
 	 * .
 	 * creation et mise à jour des fournisseurs
@@ -98,6 +115,15 @@ public interface ParamsInt {
 	 */
 	List<FournisseurDto> fetchFournisseurs();
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return FournisseurDto
+	 */
+
+	Page<Fournisseur> findPageFourn(int pageNo, int pageSize, String sortBy);
+
 	/**
 	 * .
 	 *
@@ -121,6 +147,15 @@ public interface ParamsInt {
 	 * @return List<MagasinDto>
 	 */
 	List<MagasinDto> fetchMagasins();
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<MagasinDto>
+	 */
+
+	Page<Magasin> findPageMagasin(int pageNo, int pageSize, String sortBy);
 
 	/**
 	 * .
@@ -147,6 +182,15 @@ public interface ParamsInt {
 	 */
 	List<ProduitDto> fetchProduits();
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<ProduitDto>
+	 */
+
+	Page<Produit> findPageProduit(int pageNo, int pageSize, String sortBy);
+
 	/**
 	 * .
 	 *
@@ -171,6 +215,15 @@ public interface ParamsInt {
 	 */
 	List<SuccursaleDto> fetchSuccursales();
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<SuccursaleDto>
+	 */
+
+	Page<Succursale> findPageSuccursale(int pageNo, int pageSize, String sortBy);
+
 	/**
 	 * .
 	 *
@@ -186,6 +239,15 @@ public interface ParamsInt {
 	 * @param id
 	 */
 	void deleteTypeClient(Long id);
+
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<TypeClientDto>
+	 */
+
+	Page<TypeClient> findPageTypeClient(int pageNo, int pageSize, String sortBy);
 
 	/**
 	 * .
@@ -217,6 +279,15 @@ public interface ParamsInt {
 	List<TaxeDto> fetchTaxes();
 
 	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<TaxeDto>
+	 */
+
+	Page<Taxe> findPageTaxe(int pageNo, int pageSize, String sortBy);
+
+	/**.
 	 * @param dto
 	 * @return TypeReglDto
 	 */
@@ -234,4 +305,12 @@ public interface ParamsInt {
 	 */
 	List<TypeReglDto> fetchTypeRegl();
 
+	/**.
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sortBy
+	 * @return List<TypeReglDto>
+	 */
+
+	Page<TypeReglement> findPageTypeRegl(int pageNo, int pageSize, String sortBy);
 }

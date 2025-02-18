@@ -2,6 +2,14 @@ package org.gesart.gesart.web.Parametrage;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.gesart.gesart.domain.Banque;
+import org.gesart.gesart.domain.Fournisseur;
+import org.gesart.gesart.domain.Magasin;
+import org.gesart.gesart.domain.Produit;
+import org.gesart.gesart.domain.Succursale;
+import org.gesart.gesart.domain.Taxe;
+import org.gesart.gesart.domain.TypeClient;
+import org.gesart.gesart.domain.TypeReglement;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.FournisseurDto;
@@ -12,6 +20,7 @@ import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.TypeReglDto;
 import org.gesart.gesart.service.Parametrage.ParametreService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,6 +81,15 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService.fetchMagasins(), HttpStatus.OK);
 	}
 
+	/**.
+	 * Page
+	 * @return page
+	 */
+	@GetMapping("magasin/page")
+	public ResponseEntity<Page<Magasin>> allpage() {
+		return new ResponseEntity<>(parametreService.findPageMagasin(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
 	/**
 	 * .
 	 * Create mag response entity.
@@ -109,6 +127,16 @@ public class ParametrageResource {
 	@GetMapping("/banques")
 	public ResponseEntity<List<BanqueDto>> listeBanques() {
 		return new ResponseEntity<>(parametreService.fetchBanques(), HttpStatus.OK);
+	}
+
+	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("banque/page")
+	public ResponseEntity<Page<Banque>> allpageBanque() {
+		return new ResponseEntity<>(parametreService.findPageBanque(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 
@@ -151,6 +179,16 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService.fetchProduits(), HttpStatus.OK);
 	}
 
+	/**.
+	 * page
+	 * @return page
+	 */
+
+	@GetMapping("produit/page")
+	public ResponseEntity<Page<Produit>> allpageProduit() {
+		return new ResponseEntity<>(parametreService.findPageProduit(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
 	/**
 	 * .
 	 * creation des clients
@@ -189,7 +227,6 @@ public class ParametrageResource {
 	public ResponseEntity<List<ClientDto>> listeClients() {
 		return new ResponseEntity<>(parametreService.fetchClients(), HttpStatus.OK);
 	}
-
 	/**
 	 * .
 	 * creation de type client
@@ -227,6 +264,16 @@ public class ParametrageResource {
 	@GetMapping("/typeclients")
 	public ResponseEntity<List<TypeClientDto>> listeTypeClt() {
 		return new ResponseEntity<>(parametreService.fetchTypeClient(), HttpStatus.OK);
+	}
+
+	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("type_client/page")
+	public ResponseEntity<Page<TypeClient>> allpageTypeClient() {
+		return new ResponseEntity<>(parametreService.findPageTypeClient(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	/**
@@ -268,6 +315,16 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService.fetchSuccursales(), HttpStatus.OK);
 	}
 
+	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("succursale/page")
+	public ResponseEntity<Page<Succursale>> allpageSucc() {
+		return new ResponseEntity<>(parametreService.findPageSuccursale(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
 	/**
 	 * .
 	 * creation des fournisseurs
@@ -307,6 +364,16 @@ public class ParametrageResource {
 	}
 
 	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("fournisseur/page")
+	public ResponseEntity<Page<Fournisseur>> allpageFour() {
+		return new ResponseEntity<>(parametreService.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
+	/**.
 	 * @param dto
 	 * @return TaxeDto
 	 */
@@ -324,7 +391,7 @@ public class ParametrageResource {
 	 */
 
 	@PutMapping(path = "/taxe")
-	public ResponseEntity<TaxeDto> updateFours(
+	public ResponseEntity<TaxeDto> updateTaxe(
 			@Valid @RequestBody final TaxeDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
 	}
@@ -337,6 +404,16 @@ public class ParametrageResource {
 	@GetMapping("/taxe")
 	public ResponseEntity<List<TaxeDto>> listeTaxes() {
 		return new ResponseEntity<>(parametreService.fetchTaxes(), HttpStatus.OK);
+	}
+
+	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("taxe/page")
+	public ResponseEntity<Page<Taxe>> allpageTaxe() {
+		return new ResponseEntity<>(parametreService.findPageTaxe(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	/**.
@@ -361,7 +438,6 @@ public class ParametrageResource {
 			@Valid @RequestBody final TypeReglDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
 	}
-
 	/**.
 	 *
 	 * @return  TypeReglDto
@@ -370,6 +446,16 @@ public class ParametrageResource {
 	@GetMapping("/type_reglement")
 	public ResponseEntity<List<TypeReglDto>> liste() {
 		return new ResponseEntity<>(parametreService.fetchTypeRegl(), HttpStatus.OK);
+	}
+
+	/**.
+	 * Page
+	 * @return Page
+	 */
+
+	@GetMapping("type_reglement/page")
+	public ResponseEntity<Page<TypeReglement>> allpageTypeRegl() {
+		return new ResponseEntity<>(parametreService.findPageTypeRegl(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 }
