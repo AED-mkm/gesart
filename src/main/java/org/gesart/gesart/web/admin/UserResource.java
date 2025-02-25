@@ -14,7 +14,7 @@ import org.gesart.gesart.dto.admin.PasswordChangedDto;
 import org.gesart.gesart.dto.admin.UserDto;
 import org.gesart.gesart.repository.admin.UserRepository;
 import org.gesart.gesart.security.AuthoritiesConstants;
-import org.gesart.gesart.service.admin.UserService;
+import org.gesart.gesart.serviceImpl.admin.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -249,5 +249,6 @@ public class UserResource {
     public ResponseEntity<UserDto> findUserById(@RequestParam final Long id) {
         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     }
+
 
 }

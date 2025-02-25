@@ -14,8 +14,8 @@ import org.gesart.gesart.dto.admin.TokenDto;
 import org.gesart.gesart.dto.admin.UserDto;
 import org.gesart.gesart.repository.admin.UserRepository;
 import org.gesart.gesart.security.jwt.TokenProvider;
-import org.gesart.gesart.service.admin.AccountService;
-import org.gesart.gesart.service.admin.UserService;
+import org.gesart.gesart.serviceImpl.admin.AccountService;
+import org.gesart.gesart.serviceImpl.admin.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -139,4 +139,6 @@ public class AccountResource {
     public ResponseEntity<Boolean> validateJwtToken(@RequestBody final TokenDto token) {
         return null;
     }
+
+
 }

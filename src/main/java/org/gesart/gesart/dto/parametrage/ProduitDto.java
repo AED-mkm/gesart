@@ -5,7 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.gesart.gesart.domain.traitement.Entre;
+import org.gesart.gesart.domain.traitement.ProdBonCmdeFour;
 
+import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -20,14 +24,20 @@ public class ProduitDto {
     private Long id;
     private String numProduit;
     private String designation;
-    private double prixProduit;
-    private double stockProduit;
+    private BigDecimal prixActuel;
+    private BigDecimal ancienPrix;
+    private BigDecimal stockProduit;
+    private BigDecimal coutAchat;
+    private BigDecimal ancienCoutAchat;
+    private BigDecimal prixMax;
     private int nbElement;
-    private double prixAchat;
-    private double coutEmballage;
+    private BigDecimal coutEmballage;
     private String typeEmballage;
-    private MagasinDto magasin = new MagasinDto();
     private Long magasinId;
     private String libelleMag;
+    private List<ProdBonCmdeFour> prodBonCmdeFour;
+    private BigDecimal prixProdCmde;
+    private Long entreId;
+
 
 }

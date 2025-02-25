@@ -42,7 +42,7 @@ public class UserDto {
     private Instant createdDate;
     private String createdBy;
 
-    private boolean activated = false;
+    private boolean activated = true;
 
     private boolean status = true;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.gesart.gesart.domain.Operation;
+import org.gesart.gesart.domain.traitement.Operation;
 
 
 import java.util.List;

@@ -23,6 +23,7 @@ public class MagasinDto {
     private String nomMagasin;
     private String adresseMagasin;
     private String contactMagasin;
+    private String responsableMag;
     private List<ProduitDto> produits;
 
 }

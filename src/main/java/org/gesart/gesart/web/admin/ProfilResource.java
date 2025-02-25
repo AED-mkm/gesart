@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.gesart.gesart.dto.admin.ProfilDto;
-import org.gesart.gesart.service.admin.ProfileService;
+import org.gesart.gesart.serviceImpl.admin.ProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

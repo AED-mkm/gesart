@@ -59,8 +59,6 @@ public class TokenProvider {
      * @return token
      */
 
-
-
     public String generateJwtToken(final UserDetails userDetails) {
         String authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

@@ -1,15 +1,18 @@
 package org.gesart.gesart.web.Parametrage;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.gesart.gesart.domain.Banque;
-import org.gesart.gesart.domain.Fournisseur;
-import org.gesart.gesart.domain.Magasin;
-import org.gesart.gesart.domain.Produit;
-import org.gesart.gesart.domain.Succursale;
-import org.gesart.gesart.domain.Taxe;
-import org.gesart.gesart.domain.TypeClient;
-import org.gesart.gesart.domain.TypeReglement;
+import org.gesart.gesart.Exception.BonDeCmdeFourNotFoundException;
+import org.gesart.gesart.Exception.ProduitNotFoundException;
+import org.gesart.gesart.domain.parametrage.Banque;
+import org.gesart.gesart.domain.parametrage.Fournisseur;
+import org.gesart.gesart.domain.parametrage.Magasin;
+import org.gesart.gesart.domain.parametrage.Produit;
+import org.gesart.gesart.domain.parametrage.Succursale;
+import org.gesart.gesart.domain.parametrage.Taxe;
+import org.gesart.gesart.domain.parametrage.TypeClient;
+import org.gesart.gesart.domain.parametrage.TypeReglement;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.FournisseurDto;
@@ -19,22 +22,32 @@ import org.gesart.gesart.dto.parametrage.SuccursaleDto;
 import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.TypeReglDto;
-import org.gesart.gesart.service.Parametrage.ParametreService;
+import org.gesart.gesart.security.AuthoritiesConstants;
+import org.gesart.gesart.serviceImpl.Parametrage.ParametreService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
- * The type Parametrage resource.
+ * The type parametrage resource.
  */
 @RestController
 @RequiredArgsConstructor
@@ -87,8 +100,41 @@ public class ParametrageResource {
 	 */
 	@GetMapping("magasin/page")
 	public ResponseEntity<Page<Magasin>> allpage() {
-		return new ResponseEntity<>(parametreService.findPageMagasin(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageMagasin(0, 5, "createdDate"), HttpStatus.OK);
 	}
+
+
+	@DeleteMapping("/magasin/{id}")
+	public ResponseEntity<Void> supprimerMagasin( @PathVariable Long id) {
+		try {
+			parametreService.deleteMagasin(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	/**
+	 * retourne le magasin de l'utilisateur connecté
+	 * @param id
+	 * @return magasin
+	 */
+
+
+	@GetMapping("/{id}")
+	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\") or (\"" + AuthoritiesConstants.PROPRIETAIRE + "\")" +
+			"and #id == @parametreService.getMagasinId(principal.id))")
+		public ResponseEntity<Magasin> getMagasin(@PathVariable Long id) {
+			Optional<Magasin> magasin = parametreService.findById(id);
+			if (magasin.isPresent()) {
+				return ResponseEntity.ok(magasin.get());
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		}
 
 	/**
 	 * .
@@ -103,7 +149,6 @@ public class ParametrageResource {
 			@Valid @RequestBody final BanqueDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
 	}
-
 	/**
 	 * .
 	 * Update mag response entity.
@@ -136,7 +181,19 @@ public class ParametrageResource {
 
 	@GetMapping("banque/page")
 	public ResponseEntity<Page<Banque>> allpageBanque() {
-		return new ResponseEntity<>(parametreService.findPageBanque(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageBanque(0, 5, "createdDate"), HttpStatus.OK);
+	}
+	@DeleteMapping("/banque/{id}")
+	public ResponseEntity<Void> supprimerBanque( @PathVariable Long id) {
+		try {
+			parametreService.deleteBanque(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 
@@ -174,11 +231,10 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@GetMapping("/produits")
+	@GetMapping("/produit")
 	public ResponseEntity<List<ProduitDto>> listeProduits() {
 		return new ResponseEntity<>(parametreService.fetchProduits(), HttpStatus.OK);
 	}
-
 	/**.
 	 * page
 	 * @return page
@@ -186,7 +242,20 @@ public class ParametrageResource {
 
 	@GetMapping("produit/page")
 	public ResponseEntity<Page<Produit>> allpageProduit() {
-		return new ResponseEntity<>(parametreService.findPageProduit(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageProduit(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/produit/{id}")
+	public ResponseEntity<Void> supprimerproduit( @PathVariable Long id) {
+		try {
+			parametreService.deleteProduit(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	/**
@@ -226,6 +295,19 @@ public class ParametrageResource {
 	@GetMapping("/clients")
 	public ResponseEntity<List<ClientDto>> listeClients() {
 		return new ResponseEntity<>(parametreService.fetchClients(), HttpStatus.OK);
+	}
+
+
+	@DeleteMapping("/client/{id}")
+	public ResponseEntity<Void> supprimerClient( @PathVariable Long id) {
+		try {
+			parametreService.deleteClient(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 	/**
 	 * .
@@ -273,7 +355,21 @@ public class ParametrageResource {
 
 	@GetMapping("type_client/page")
 	public ResponseEntity<Page<TypeClient>> allpageTypeClient() {
-		return new ResponseEntity<>(parametreService.findPageTypeClient(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageTypeClient(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
+
+	@DeleteMapping("/typeClient/{id}")
+	public ResponseEntity<Void> supprimertypeClient( @PathVariable Long id) {
+		try {
+			parametreService.deleteTypeClient(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	/**
@@ -322,7 +418,20 @@ public class ParametrageResource {
 
 	@GetMapping("succursale/page")
 	public ResponseEntity<Page<Succursale>> allpageSucc() {
-		return new ResponseEntity<>(parametreService.findPageSuccursale(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageSuccursale(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/succursale/{id}")
+	public ResponseEntity<Void> supprimersucc( @PathVariable Long id) {
+		try {
+			parametreService.deleteSuccursale(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	/**
@@ -363,6 +472,22 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService.fetchFournisseurs(), HttpStatus.OK);
 	}
 
+	/**
+	 * supprimer un fournisseur
+	 * @param id
+	 * @return void
+	 */
+	@DeleteMapping("/fournisseur/{id}")
+	public ResponseEntity<Void> supprimerFournissseur( @PathVariable Long id) {
+		try {
+			parametreService.deleteFournisseur(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	/**.
 	 * Page
 	 * @return Page
@@ -370,7 +495,8 @@ public class ParametrageResource {
 
 	@GetMapping("fournisseur/page")
 	public ResponseEntity<Page<Fournisseur>> allpageFour() {
-		return new ResponseEntity<>(parametreService.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	/**.
@@ -413,7 +539,20 @@ public class ParametrageResource {
 
 	@GetMapping("taxe/page")
 	public ResponseEntity<Page<Taxe>> allpageTaxe() {
-		return new ResponseEntity<>(parametreService.findPageTaxe(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageTaxe(0, 5, "createdDate"), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/taxe/{id}")
+	public ResponseEntity<Void> supprimertaxe( @PathVariable Long id) {
+		try {
+			parametreService.deleteTaxe(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	/**.
@@ -455,7 +594,53 @@ public class ParametrageResource {
 
 	@GetMapping("type_reglement/page")
 	public ResponseEntity<Page<TypeReglement>> allpageTypeRegl() {
-		return new ResponseEntity<>(parametreService.findPageTypeRegl(0, 5, "createdDate"), HttpStatus.OK);
+		return new ResponseEntity<>(parametreService
+				.findPageTypeRegl(0, 5, "createdDate"), HttpStatus.OK);
 	}
+
+	@DeleteMapping("/type_reglement/{id}")
+	public ResponseEntity<Void> supprimerTyperegl( @PathVariable Long id) {
+		try {
+			parametreService.deleteTyperegl(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (BonDeCmdeFourNotFoundException | ProduitNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	/**
+	 * mettra à jou les prix des produits
+	 * @param id
+	 * @param nouveauPrix
+	 * @return produit
+	 */
+	@PutMapping("/update-prix/{id}")
+		public ResponseEntity<Produit>updatePrix(
+				@PathVariable Long id,
+				@RequestParam BigDecimal nouveauPrix
+				) {
+			Produit produit = parametreService.updatePrixProd(id, nouveauPrix);
+			return ResponseEntity.ok(produit);
+		}
+
+	/**
+	 * mettre à jour les couts d'achat
+	 * @param id
+	 * @param nouveauCoutAchat
+	 * @return produit
+	 */
+
+	@PutMapping("/update-cout-achat/{id}")
+			public ResponseEntity<Produit> updateCoutAchat(
+					@PathVariable Long id,
+					@RequestParam BigDecimal nouveauCoutAchat) {
+				Produit produit = parametreService.updateCoutProd(id, nouveauCoutAchat);
+				return ResponseEntity.ok(produit);
+			}
+
+
+
 
 }

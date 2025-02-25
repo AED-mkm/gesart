@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import org.gesart.gesart.domain.enums.TypeStatut;
+import org.hibernate.annotations.SoftDelete;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.Instant;
-
+import java.time.LocalDateTime;
 
 
 @Data
@@ -45,4 +46,6 @@ public abstract class AbstractAuditEntity implements Serializable {
     @Column(name = "statut")
     @Enumerated(EnumType.STRING)
     private TypeStatut statut = TypeStatut.ACTIF;
+
+
 }

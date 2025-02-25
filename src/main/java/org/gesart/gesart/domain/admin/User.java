@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,7 @@ import lombok.ToString;
 
 
 import org.gesart.gesart.config.SecurityConstants;
-import org.gesart.gesart.domain.Magasin;
+import org.gesart.gesart.domain.parametrage.Magasin;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -112,13 +113,8 @@ public class User extends AbstractAuditEntity {
     @JsonIgnoreProperties(value = "users", allowSetters = true)
     private Profil profil;
 
-    /**
-     *
-     * @param id
-     */
-    public User(final Long id) {
-        this.id = id;
-    }
+    @Transient
+    private String info;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mag_id", referencedColumnName = "id")

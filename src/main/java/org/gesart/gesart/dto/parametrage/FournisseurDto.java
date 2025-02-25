@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.gesart.gesart.domain.BonDeCmdeFour;
-import org.gesart.gesart.domain.Entre;
+import org.gesart.gesart.domain.traitement.BonDeCmdeFour;
+import org.gesart.gesart.domain.traitement.Entre;
 
 
 import java.util.List;
