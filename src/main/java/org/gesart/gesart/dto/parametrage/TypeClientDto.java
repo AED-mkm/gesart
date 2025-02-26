@@ -17,8 +17,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class TypeClientDto {
     private Long id;
+    private String code;
     private String libelle;
-    private MagasinDto magasin = new MagasinDto();
     private Long magasinId;
     private String libelleMag;
 }

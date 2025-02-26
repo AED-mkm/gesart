@@ -26,7 +26,8 @@ public class ClientDto {
     private String adresseClient;
    /* @OneToMany(mappedBy = "client")
     private List<TypeClient> typeClients;*/
-   private MagasinDto magasin = new MagasinDto();
+    //private MagasinDto magasin = new MagasinDto();
+    private Long typeClientId;
     private Long magasinId;
     private String libelleMag;
 

@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,8 +33,10 @@ public class TypeReglement extends AbstractAuditEntity {
     @SequenceGenerator(name = "seq_type_regl", sequenceName = "seq_type_regl",
             initialValue = 8010, allocationSize = 5)
     private Long id;
-    @Column(name = "code")
+    @NotBlank(message = "le code de type client est obligatoire")
+    @Column(name = "code",unique = true)
     private String code;
-    @Column(name = "type_regl")
+    @NotBlank(message = "le de type reglement est obligatoire")
+    @Column(name = "type_regl", unique = true)
     private String typeRegl;
 }

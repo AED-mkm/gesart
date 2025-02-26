@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 
 
 /**
@@ -20,7 +21,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class TaxeDto {
     private Long id;
+    private String code;
     private String libelle;
-    private double taxe;
+    private BigDecimal taxe;
 
 }

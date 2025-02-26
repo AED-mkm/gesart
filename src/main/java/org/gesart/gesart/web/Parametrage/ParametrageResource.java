@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.gesart.gesart.Exception.BonDeCmdeFourNotFoundException;
 import org.gesart.gesart.Exception.ProduitNotFoundException;
 import org.gesart.gesart.domain.parametrage.Banque;
+import org.gesart.gesart.domain.parametrage.Client;
 import org.gesart.gesart.domain.parametrage.Fournisseur;
 import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.domain.parametrage.Produit;
@@ -98,14 +99,14 @@ public class ParametrageResource {
 	 * Page
 	 * @return page
 	 */
-	@GetMapping("magasin/page")
+	@GetMapping("magasins/page")
 	public ResponseEntity<Page<Magasin>> allpage() {
 		return new ResponseEntity<>(parametreService
 				.findPageMagasin(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 
-	@DeleteMapping("/magasin/{id}")
+	@DeleteMapping("/magasins/{id}")
 	public ResponseEntity<Void> supprimerMagasin( @PathVariable Long id) {
 		try {
 			parametreService.deleteMagasin(id);
@@ -144,8 +145,8 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PostMapping(path = "/banque")
-	public ResponseEntity<BanqueDto> createMag(
+	@PostMapping(path = "/banques")
+	public ResponseEntity<BanqueDto> createBanque(
 			@Valid @RequestBody final BanqueDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
 	}
@@ -157,7 +158,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/banque")
+	@PutMapping(path = "/banques")
 	public ResponseEntity<BanqueDto> updateMag(
 			@Valid @RequestBody final BanqueDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
@@ -179,12 +180,12 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("banque/page")
+	@GetMapping("banques/page")
 	public ResponseEntity<Page<Banque>> allpageBanque() {
 		return new ResponseEntity<>(parametreService
 				.findPageBanque(0, 5, "createdDate"), HttpStatus.OK);
 	}
-	@DeleteMapping("/banque/{id}")
+	@DeleteMapping("/banques/{id}")
 	public ResponseEntity<Void> supprimerBanque( @PathVariable Long id) {
 		try {
 			parametreService.deleteBanque(id);
@@ -205,7 +206,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PostMapping(path = "/produit")
+	@PostMapping(path = "/produits")
 	public ResponseEntity<ProduitDto> createprod(
 			@Valid @RequestBody final ProduitDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateProd(dto), HttpStatus.CREATED);
@@ -219,7 +220,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/produit")
+	@PutMapping(path = "/produits")
 	public ResponseEntity<ProduitDto> updateMag(
 			@Valid @RequestBody final ProduitDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateProd(dto), HttpStatus.CREATED);
@@ -231,7 +232,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@GetMapping("/produit")
+	@GetMapping("/produits")
 	public ResponseEntity<List<ProduitDto>> listeProduits() {
 		return new ResponseEntity<>(parametreService.fetchProduits(), HttpStatus.OK);
 	}
@@ -240,13 +241,13 @@ public class ParametrageResource {
 	 * @return page
 	 */
 
-	@GetMapping("produit/page")
+	@GetMapping("produits/page")
 	public ResponseEntity<Page<Produit>> allpageProduit() {
 		return new ResponseEntity<>(parametreService
 				.findPageProduit(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/produit/{id}")
+	@DeleteMapping("/produits/{id}")
 	public ResponseEntity<Void> supprimerproduit( @PathVariable Long id) {
 		try {
 			parametreService.deleteProduit(id);
@@ -266,7 +267,7 @@ public class ParametrageResource {
 	 *
 	 * @return ClientDto response entity
 	 */
-	@PostMapping(path = "/client")
+	@PostMapping(path = "/clients")
 	public ResponseEntity<ClientDto> createClt(
 			@Valid @RequestBody final ClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateClient(dto), HttpStatus.CREATED);
@@ -280,7 +281,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/client")
+	@PutMapping(path = "/clients")
 	public ResponseEntity<ClientDto> updateClt(
 			@Valid @RequestBody final ClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateClient(dto), HttpStatus.CREATED);
@@ -297,8 +298,21 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService.fetchClients(), HttpStatus.OK);
 	}
 
+	/**
+	 * retourne un client par idclient
+	 * @param id
+	 * @return client
+	 */
+	@GetMapping("/clients/{idClient}")
+	public ResponseEntity<ClientDto> getClientById(@PathVariable Long id) {
+		return parametreService.findClientById(id)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
 
-	@DeleteMapping("/client/{id}")
+
+
+	@DeleteMapping("/clients/{id}")
 	public ResponseEntity<Void> supprimerClient( @PathVariable Long id) {
 		try {
 			parametreService.deleteClient(id);
@@ -317,7 +331,7 @@ public class ParametrageResource {
 	 *
 	 * @return TypeClientDto response entity
 	 */
-	@PostMapping(path = "/typeclient")
+	@PostMapping(path = "/type_clients")
 	public ResponseEntity<TypeClientDto> createTypeClt(
 			@Valid @RequestBody final TypeClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeClt(dto), HttpStatus.CREATED);
@@ -331,7 +345,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/typeclient")
+	@PutMapping(path = "/type_clients")
 	public ResponseEntity<TypeClientDto> updateTypeClt(
 			@Valid @RequestBody final TypeClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeClt(dto), HttpStatus.CREATED);
@@ -343,7 +357,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@GetMapping("/typeclients")
+	@GetMapping("/type_clients")
 	public ResponseEntity<List<TypeClientDto>> listeTypeClt() {
 		return new ResponseEntity<>(parametreService.fetchTypeClient(), HttpStatus.OK);
 	}
@@ -353,14 +367,14 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("type_client/page")
+	@GetMapping("type_clients/page")
 	public ResponseEntity<Page<TypeClient>> allpageTypeClient() {
 		return new ResponseEntity<>(parametreService
 				.findPageTypeClient(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 
-	@DeleteMapping("/typeClient/{id}")
+	@DeleteMapping("/type_clients/{id}")
 	public ResponseEntity<Void> supprimertypeClient( @PathVariable Long id) {
 		try {
 			parametreService.deleteTypeClient(id);
@@ -380,7 +394,7 @@ public class ParametrageResource {
 	 *
 	 * @return SuccursaleDto response entity
 	 */
-	@PostMapping(path = "/succursale")
+	@PostMapping(path = "/succursales")
 	public ResponseEntity<SuccursaleDto> createSucc(
 			@Valid @RequestBody final SuccursaleDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateSucc(dto), HttpStatus.CREATED);
@@ -394,7 +408,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/succursale")
+	@PutMapping(path = "/succursales")
 	public ResponseEntity<SuccursaleDto> updateSucc(
 			@Valid @RequestBody final SuccursaleDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateSucc(dto), HttpStatus.CREATED);
@@ -406,7 +420,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@GetMapping("/succursale")
+	@GetMapping("/succursales")
 	public ResponseEntity<List<SuccursaleDto>> listeSuccursales() {
 		return new ResponseEntity<>(parametreService.fetchSuccursales(), HttpStatus.OK);
 	}
@@ -416,13 +430,13 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("succursale/page")
+	@GetMapping("succursales/page")
 	public ResponseEntity<Page<Succursale>> allpageSucc() {
 		return new ResponseEntity<>(parametreService
 				.findPageSuccursale(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/succursale/{id}")
+	@DeleteMapping("/succursales/{id}")
 	public ResponseEntity<Void> supprimersucc( @PathVariable Long id) {
 		try {
 			parametreService.deleteSuccursale(id);
@@ -442,7 +456,7 @@ public class ParametrageResource {
 	 *
 	 * @return FournisseurDto response entity
 	 */
-	@PostMapping(path = "/fournisseur")
+	@PostMapping(path = "/fournisseurs")
 	public ResponseEntity<FournisseurDto> createfssr(
 			@Valid @RequestBody final FournisseurDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateFour(dto), HttpStatus.CREATED);
@@ -456,7 +470,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PutMapping(path = "/fournisseur")
+	@PutMapping(path = "/fournisseurs")
 	public ResponseEntity<FournisseurDto> updateFours(
 			@Valid @RequestBody final FournisseurDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateFour(dto), HttpStatus.CREATED);
@@ -467,7 +481,7 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@GetMapping("/fournisseur")
+	@GetMapping("/fournisseurs")
 	public ResponseEntity<List<FournisseurDto>> listeFournisseurs() {
 		return new ResponseEntity<>(parametreService.fetchFournisseurs(), HttpStatus.OK);
 	}
@@ -477,7 +491,7 @@ public class ParametrageResource {
 	 * @param id
 	 * @return void
 	 */
-	@DeleteMapping("/fournisseur/{id}")
+	@DeleteMapping("/fournisseurs/{id}")
 	public ResponseEntity<Void> supprimerFournissseur( @PathVariable Long id) {
 		try {
 			parametreService.deleteFournisseur(id);
@@ -493,7 +507,7 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("fournisseur/page")
+	@GetMapping("fournisseurs/page")
 	public ResponseEntity<Page<Fournisseur>> allpageFour() {
 		return new ResponseEntity<>(parametreService
 				.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
@@ -504,7 +518,7 @@ public class ParametrageResource {
 	 * @return TaxeDto
 	 */
 
-	@PostMapping(path = "/taxe")
+	@PostMapping(path = "/taxes")
 	public ResponseEntity<TaxeDto> createTaxe(
 			@Valid @RequestBody final TaxeDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
@@ -516,7 +530,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 
-	@PutMapping(path = "/taxe")
+	@PutMapping(path = "/taxes")
 	public ResponseEntity<TaxeDto> updateTaxe(
 			@Valid @RequestBody final TaxeDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
@@ -527,7 +541,7 @@ public class ParametrageResource {
 	 * @return TaxeDto
 	 */
 
-	@GetMapping("/taxe")
+	@GetMapping("/taxes")
 	public ResponseEntity<List<TaxeDto>> listeTaxes() {
 		return new ResponseEntity<>(parametreService.fetchTaxes(), HttpStatus.OK);
 	}
@@ -537,13 +551,13 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("taxe/page")
+	@GetMapping("taxes/page")
 	public ResponseEntity<Page<Taxe>> allpageTaxe() {
 		return new ResponseEntity<>(parametreService
 				.findPageTaxe(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/taxe/{id}")
+	@DeleteMapping("/taxes/{id}")
 	public ResponseEntity<Void> supprimertaxe( @PathVariable Long id) {
 		try {
 			parametreService.deleteTaxe(id);
@@ -560,7 +574,7 @@ public class ParametrageResource {
 	 * @return TypeReglDto
 	 */
 
-	@PostMapping(path = "/type_reglement")
+	@PostMapping(path = "/type_reglements")
 	public ResponseEntity<TypeReglDto> createTyperegl(
 			@Valid @RequestBody final TypeReglDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
@@ -572,7 +586,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 
-	@PutMapping(path = "/type_reglement")
+	@PutMapping(path = "/type_reglements")
 	public ResponseEntity<TypeReglDto> update(
 			@Valid @RequestBody final TypeReglDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
@@ -582,7 +596,7 @@ public class ParametrageResource {
 	 * @return  TypeReglDto
 	 */
 
-	@GetMapping("/type_reglement")
+	@GetMapping("/type_reglements")
 	public ResponseEntity<List<TypeReglDto>> liste() {
 		return new ResponseEntity<>(parametreService.fetchTypeRegl(), HttpStatus.OK);
 	}
@@ -592,13 +606,13 @@ public class ParametrageResource {
 	 * @return Page
 	 */
 
-	@GetMapping("type_reglement/page")
+	@GetMapping("type_reglements/page")
 	public ResponseEntity<Page<TypeReglement>> allpageTypeRegl() {
 		return new ResponseEntity<>(parametreService
 				.findPageTypeRegl(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/type_reglement/{id}")
+	@DeleteMapping("/type_reglements/{id}")
 	public ResponseEntity<Void> supprimerTyperegl( @PathVariable Long id) {
 		try {
 			parametreService.deleteTyperegl(id);
@@ -639,8 +653,5 @@ public class ParametrageResource {
 				Produit produit = parametreService.updateCoutProd(id, nouveauCoutAchat);
 				return ResponseEntity.ok(produit);
 			}
-
-
-
 
 }

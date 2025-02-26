@@ -24,11 +24,9 @@ public class SuccursaleDto {
     private String codeSucc;
     private String libelleSucc;
     private String contactSucc;
-    private BanqueDto banque = new BanqueDto();
     private Long banqueId;
     private String banqLibelle;
     private List<Operation> operations;
-    private MagasinDto magasin = new MagasinDto();
     private Long magasinId;
     private String libelleMag;
 }

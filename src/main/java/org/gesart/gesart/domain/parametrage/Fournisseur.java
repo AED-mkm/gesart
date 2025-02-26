@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,8 +40,9 @@ public class Fournisseur extends AbstractAuditEntity {
     @SequenceGenerator(name = "seq_fourn", sequenceName = "seq_fourn",
             initialValue = 8010, allocationSize = 5)
     private Long id;
-    @Column(name = "code_fourn")
+    @Column(name = "code_fourn", unique = true)
     private String codeFour;
+    @NotBlank(message = "le nom du fournisseur est obligatoire")
     @Column(name = "nom_four")
     private String nomFour;
     @Column(name = "adresse_four")

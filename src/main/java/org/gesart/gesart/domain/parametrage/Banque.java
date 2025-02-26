@@ -2,7 +2,9 @@ package org.gesart.gesart.domain.parametrage;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,25 +42,19 @@ public class Banque extends AbstractAuditEntity {
             initialValue = 8010, allocationSize = 5)
 
     private Long id;
-
-    @Column(name = "code_banque")
+    @NotBlank(message = "le code banque est obligatoire")
+    @Column(name = "code_banque" , unique = true)
     private String codeBanque;
-
+    @NotBlank(message = "le nom de la banque est obligatoire")
     @Column(name = "banque")
     private String libellebanque;
-
     @Column(name = "contact")
     private String contact;
-
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "banque")
-    private List<Magasin> magasins;*/
-
+    @JsonIgnore
     @OneToMany(mappedBy = "banque")
     private List<Succursale> succursales;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mag_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "magasin", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "banque", allowSetters = true)
     private Magasin magasin;
 

@@ -115,6 +115,15 @@ public class ParametreService implements ParamsInt {
 				mapper.map(client, ClientDto.class)).collect(Collectors.toList());
 	}
 
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	@Override
+	public Optional<ClientDto> findClientById(Long id) {
+		return this.clientRepository.findClientById(id);
+	}
 
 	/**
 	 * .

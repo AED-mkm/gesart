@@ -1,6 +1,7 @@
 package org.gesart.gesart.domain.parametrage;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,8 +35,9 @@ public class Magasin extends AbstractAuditEntity {
     @SequenceGenerator(name = "seq_mag", sequenceName = "seq_mag",
             initialValue = 8010, allocationSize = 5)
     private Long id;
-    @Column(name = "code_mag")
+    @Column(name = "code_mag", unique = true)
     private String codeMagasin;
+    @NotBlank(message = "le nom du magasin est obligatoire")
     @Column(name = "nom_mag")
     private String nomMagasin;
     @Column(name = "adresse_mag")
@@ -45,5 +48,8 @@ public class Magasin extends AbstractAuditEntity {
     private String responsableMag;
     @OneToMany(mappedBy = "magasin")
     private List<Produit> produits;
+    @JsonIgnore
+    @OneToMany(mappedBy = "magasin")
+    private List<Banque> banques;
 
 }

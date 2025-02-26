@@ -26,8 +26,8 @@ public class BanqueDto {
     /*@JsonIgnore
     @OneToMany(mappedBy = "banque")
     private List<Magasin> magasins;*/
-    private List<SuccursaleDto> succursales;
-    private MagasinDto magasin = new MagasinDto();
+    //private List<SuccursaleDto> succursales;
+    //private MagasinDto magasin = new MagasinDto();
     private Long magasinId;
     private String libelleMag;
 }

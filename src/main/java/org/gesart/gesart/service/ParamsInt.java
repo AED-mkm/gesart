@@ -49,6 +49,8 @@ public interface ParamsInt {
 	 */
 	List<ClientDto> fetchClients();
 
+	Optional<ClientDto> findClientById(Long id);
+
 	/**.
 	 * Pagination des listes
 	 * @param pageNo

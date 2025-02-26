@@ -45,13 +45,16 @@ public class DozerConfig {
                     .fields("profilLibelle", "profil.libelle")
                     .fields("profilId", "profil.id");
             mapping(ProfilDto.class, Profil.class, TypeMappingOptions.mapNull(false));
-            mapping(SuccursaleDto.class, Succursale.class, TypeMappingOptions.mapNull(false));
-                  /*  .fields("banqLibelle", "banque.libellebanque")
-                    .fields("banqueId", "banque.id");*/
-            mapping(BanqueDto.class, Banque.class, TypeMappingOptions.mapNull(false));
-                 /*   .fields("libelleMag", "magasin.nomMagasin")
-                    .fields("magasinId", "magasin.id");*/
-            mapping(ClientDto.class, Client.class, TypeMappingOptions.mapNull(false));
+
+            mapping(SuccursaleDto.class, Succursale.class, TypeMappingOptions.mapNull(false))
+                     .fields("banqLibelle", "banque.libellebanque")
+                    .fields("banqueId", "banque.id");
+            mapping(BanqueDto.class, Banque.class, TypeMappingOptions.mapNull(false))
+                     .fields("libelleMag", "magasin.nomMagasin")
+                    .fields("magasinId", "magasin.id");
+            mapping(ClientDto.class, Client.class, TypeMappingOptions.mapNull(false))
+                    .fields("typeClientId","typeclient.id")
+                    .fields("magasinId", "magasin.id");
             mapping(FournisseurDto.class, Fournisseur.class, TypeMappingOptions.mapNull(false))
                     .fields("libelleMag", "magasin.nomMagasin")
                     .fields("magasinId", "magasin.id");

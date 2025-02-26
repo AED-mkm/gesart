@@ -42,10 +42,10 @@ public class Produit extends AbstractAuditEntity {
             initialValue = 8010, allocationSize = 5)
     private Long id;
     @NotNull
-    @Column(name = "num_prod")
+    @Column(name = "num_prod", unique = true)
     private String numProduit;
     @NotNull
-    @Column(name = "designation")
+    @Column(name = "designation", unique = true)
     private String designation;
     @NotNull
     @Column(name = "prix_actuel")
