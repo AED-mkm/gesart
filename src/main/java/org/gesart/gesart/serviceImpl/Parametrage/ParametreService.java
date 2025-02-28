@@ -613,6 +613,13 @@ public class ParametreService implements ParamsInt {
 		return typeClientRepository.findAll(pageable);
 	}
 
+
+	public Optional<TypeClient> findTypeClientById(Long id) {
+		return Optional.ofNullable(typeClientRepository.findTypeClientById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "type client non trouvé")));
+	}
+
+
 	/**.
 	 * @param dto
 	 *
@@ -666,6 +673,13 @@ public class ParametreService implements ParamsInt {
 	}
 
 
+
+	public Optional<Taxe> findTaxeById(Long id) {
+		return Optional.ofNullable(taxeRepository.findTaxeById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "taxe non trouvé")));
+	}
+
+
 	/**.
 	 *
 	 * @param dto
@@ -716,5 +730,11 @@ public class ParametreService implements ParamsInt {
 		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 		return typeReglRepository.findAll(pageable);
 	}
+
+	public Optional<TypeReglement> findTypeReglementById(Long id) {
+		return Optional.ofNullable(typeReglRepository.findTypeReglementById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "type reglement non trouvé")));
+	}
+
 
 }

@@ -1,5 +1,6 @@
 package org.gesart.gesart.domain.parametrage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -68,6 +69,7 @@ public class Produit extends AbstractAuditEntity {
     private String typeEmballage;
     @OneToMany(mappedBy = "produit")
     private List<ProdBonCmdeFour> prodBonCmdeFour;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "produit", allowSetters = true)

@@ -400,6 +400,12 @@ public class ParametrageResource {
 		}
 	}
 
+
+	@GetMapping("/type_clients/{idTypeClt}")
+	public Optional<TypeClient> getTypeReglementById(@PathVariable Long idTypeClt) {
+		return parametreService.findTypeClientById(idTypeClt);
+	}
+
 	/**
 	 * .
 	 * creation des succursales
@@ -595,6 +601,12 @@ public class ParametrageResource {
 		}
 	}
 
+
+	@GetMapping("/taxes/{idTaxe}")
+	public Optional<Taxe> getTaxeById(@PathVariable Long idTaxe) {
+		return parametreService.findTaxeById(idTaxe);
+	}
+
 	/**.
 	 * @param dto
 	 * @return TypeReglDto
@@ -648,6 +660,13 @@ public class ParametrageResource {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+
+
+
+	@GetMapping("/type_reglements/{idType}")
+	public Optional<TypeReglement> findTypeReglementById(@PathVariable Long idType) {
+		return parametreService.findTypeReglementById(idType);
 	}
 
 	/**
