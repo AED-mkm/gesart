@@ -1,5 +1,6 @@
 package org.gesart.gesart.domain.parametrage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,14 +47,17 @@ public class Succursale extends AbstractAuditEntity {
     private String libelleSucc;
     @Column(name = "contact_succ")
     private String contactSucc;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "banque", referencedColumnName = "id")
-    @JsonIgnoreProperties(value = "succ_id", allowSetters = true)
+    @JsonIgnoreProperties(value = "succursales", allowSetters = true)
     private Banque banque;
+
     @OneToMany(mappedBy = "succursale")
     private List<Operation> operations;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    /*@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "succ", allowSetters = true)
-    private Magasin magasin;
+    private Magasin magasin;*/
 }

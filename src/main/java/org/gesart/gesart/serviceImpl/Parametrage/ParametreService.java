@@ -43,8 +43,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -116,14 +118,75 @@ public class ParametreService implements ParamsInt {
 	}
 
 	/**
+	 * @param idClient
+	 *
+	 * @return
+	 */
+	@Override
+	public Client findClientById(Long idClient) {
+		return clientRepository.findClientById(idClient);
+	}
+
+	/**
 	 * @param id
 	 *
 	 * @return
 	 */
 	@Override
-	public Optional<ClientDto> findClientById(Long id) {
-		return this.clientRepository.findClientById(id);
+	public  Optional<Magasin> findMagasinById(Long id) {
+		return Optional.ofNullable(magasinRepository.findMagasinById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Magasin non trouvé")));
 	}
+
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	@Override
+	public Optional<Banque> findBanqueById(Long id) {
+		return Optional.ofNullable(banqueRepository.findBanqueById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Banque non trouvé")));
+	}
+
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	@Override
+	public Optional<Fournisseur> findFournisseurById(Long id) {
+		return Optional.ofNullable(fournisseurRepository.findFournisseurById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fournisseur non trouvé")));
+	}
+
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	@Override
+	public Optional<Succursale> findSuccursaleById(Long id) {
+		return Optional.ofNullable(succursaleRepository.findSuccursaleById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "succursale non trouvé")));
+	}
+
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	@Override
+	public Client getClientById(Long id) {
+		return null;
+	}
+
+	/**
+	 * @param idClient
+	 *
+	 * @return
+	 */
+
 
 	/**
 	 * .
@@ -151,6 +214,13 @@ public class ParametreService implements ParamsInt {
 	@Override
 	public BanqueDto createAndUpdateBanque(final BanqueDto dto) {
 		Banque entity = mapper.map(dto, Banque.class);
+		if(entity.getId()!=null){
+			List<Magasin> magasin = entity.getMagasins().stream()
+					.map(magDto-> mapper.map(magDto, Magasin.class))
+					.collect(Collectors.toList());
+			magasin = this.magasinRepository.saveAll(magasin);
+			entity.setMagasins(magasin);
+		}
 		entity = banqueRepository.save(entity);
 		return mapper.map(entity, BanqueDto.class);
 	}
@@ -321,7 +391,6 @@ public class ParametreService implements ParamsInt {
 	 * @return
 	 */
 
-
 	public Long getMagasinId(Long userId) {
 		User user = userRepository.findById(userId).orElse(null);
 		if (user != null) {
@@ -358,6 +427,13 @@ public class ParametreService implements ParamsInt {
 			return;
 		}
 		produitRepository.deleteById(id);
+	}
+
+
+	@Override
+	public Optional<Produit> findProduitById(Long id) {
+		return Optional.ofNullable(produitRepository.findProduitById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "produit non trouvé")));
 	}
 
 	/**

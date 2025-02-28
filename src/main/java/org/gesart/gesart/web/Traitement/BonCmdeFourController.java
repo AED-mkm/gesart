@@ -88,10 +88,10 @@ public class BonCmdeFourController  {
 	 * @param bonCmdeId
 	 * @return List<ProdBonCmdeFourDto>
 	 */
-	@GetMapping("/produits/{bonCmdeId}")
+	/*@GetMapping("/produits/{bonCmdeId}")
 	public ResponseEntity<List<ProdBonCmdeFourDto>> getProduitsByCommandeId(@PathVariable Long bonCmdeId) {
 		List<ProdBonCmdeFourDto> produits = bonDeCmdeFourService.getProduitsByCommandeId(bonCmdeId);
 		return ResponseEntity.ok(produits);
-	}
+	}*/
 
 }

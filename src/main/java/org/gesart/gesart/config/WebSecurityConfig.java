@@ -109,6 +109,10 @@ public class WebSecurityConfig {
                 .authorizeRequests(auth -> {
                     auth.requestMatchers("/api/users/login",
                             "/api/portail/**",
+                            "/hello/**",
+                            "/api/fournisseur",
+                            "/api/magasins",
+                            "/users/login",
                             "/api/reset-password/*",
                             "/api/activate-compte",
                             "/api/verif-token-validite",

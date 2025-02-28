@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
@@ -53,9 +54,7 @@ public class Banque extends AbstractAuditEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "banque")
     private List<Succursale> succursales;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "magasin", referencedColumnName = "id")
-    @JsonIgnoreProperties(value = "banque", allowSetters = true)
-    private Magasin magasin;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Magasin> magasins;
 
 }

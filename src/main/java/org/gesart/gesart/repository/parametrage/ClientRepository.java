@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends AbstractRepository<Client, Long> {
-	Optional<ClientDto> findClientById(Long id);
+	Client findClientById(Long id);
 }

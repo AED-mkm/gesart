@@ -1,6 +1,5 @@
 package org.gesart.gesart.web.Parametrage;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.gesart.gesart.Exception.BonDeCmdeFourNotFoundException;
@@ -25,8 +24,6 @@ import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.TypeReglDto;
 import org.gesart.gesart.security.AuthoritiesConstants;
 import org.gesart.gesart.serviceImpl.Parametrage.ParametreService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -118,6 +115,11 @@ public class ParametrageResource {
 		}
 	}
 
+	@GetMapping("/magasins/{idMagasin}")
+	public Optional<Magasin> geMagasinbyId(@PathVariable Long idMagasin) {
+		return parametreService.findMagasinById(idMagasin);
+	}
+
 	/**
 	 * retourne le magasin de l'utilisateur connecté
 	 * @param id
@@ -198,6 +200,13 @@ public class ParametrageResource {
 	}
 
 
+	@GetMapping("/banques/{idBanaue}")
+	public Optional<Banque> geBanquebyId(@PathVariable Long idBanaue) {
+		return parametreService.findBanqueById(idBanaue);
+	}
+
+
+
 	/**
 	 * .
 	 * Create mag response entity.
@@ -259,6 +268,13 @@ public class ParametrageResource {
 		}
 	}
 
+
+
+	@GetMapping("/produits/{idProd}")
+	public Optional<Produit> getProduitById(@PathVariable Long idProd) {
+		return parametreService.findProduitById(idProd);
+	}
+
 	/**
 	 * .
 	 * creation des clients
@@ -300,17 +316,15 @@ public class ParametrageResource {
 
 	/**
 	 * retourne un client par idclient
-	 * @param id
+	 *
+	 * @param idClient
+	 *
 	 * @return client
 	 */
 	@GetMapping("/clients/{idClient}")
-	public ResponseEntity<ClientDto> getClientById(@PathVariable Long id) {
-		return parametreService.findClientById(id)
-				.map(ResponseEntity::ok)
-				.orElseGet(() -> ResponseEntity.notFound().build());
+	public Client getClientById(@PathVariable Long idClient) {
+		 return parametreService.findClientById(idClient);
 	}
-
-
 
 	@DeleteMapping("/clients/{id}")
 	public ResponseEntity<Void> supprimerClient( @PathVariable Long id) {
@@ -448,6 +462,12 @@ public class ParametrageResource {
 		}
 	}
 
+
+	@GetMapping("/succursales/{idsucc}")
+	public Optional<Succursale> findSuccursaleById(@PathVariable Long idsucc) {
+		return parametreService.findSuccursaleById(idsucc);
+	}
+
 	/**
 	 * .
 	 * creation des fournisseurs
@@ -512,6 +532,12 @@ public class ParametrageResource {
 		return new ResponseEntity<>(parametreService
 				.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
 	}
+
+	@GetMapping("/fournisseurs/{idFour}")
+	public Optional<Fournisseur> getFournisseurById(@PathVariable Long idFour) {
+		return parametreService.findFournisseurById(idFour);
+	}
+
 
 	/**.
 	 * @param dto

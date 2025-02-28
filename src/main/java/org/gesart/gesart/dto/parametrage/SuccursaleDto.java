@@ -27,6 +27,4 @@ public class SuccursaleDto {
     private Long banqueId;
     private String banqLibelle;
     private List<Operation> operations;
-    private Long magasinId;
-    private String libelleMag;
 }

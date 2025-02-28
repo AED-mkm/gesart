@@ -48,10 +48,9 @@ public class Client extends AbstractAuditEntity {
     @Column(name = "adresse")
     private String adresseClient;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type", referencedColumnName = "id")
+    @JoinColumn(name = "typeClient", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "client", allowSetters = true)
     private TypeClient typeClient;
-
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "client", allowSetters = true)

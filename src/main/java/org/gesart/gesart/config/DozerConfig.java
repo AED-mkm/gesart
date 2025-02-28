@@ -45,13 +45,10 @@ public class DozerConfig {
                     .fields("profilLibelle", "profil.libelle")
                     .fields("profilId", "profil.id");
             mapping(ProfilDto.class, Profil.class, TypeMappingOptions.mapNull(false));
-
             mapping(SuccursaleDto.class, Succursale.class, TypeMappingOptions.mapNull(false))
                      .fields("banqLibelle", "banque.libellebanque")
                     .fields("banqueId", "banque.id");
-            mapping(BanqueDto.class, Banque.class, TypeMappingOptions.mapNull(false))
-                     .fields("libelleMag", "magasin.nomMagasin")
-                    .fields("magasinId", "magasin.id");
+            mapping(BanqueDto.class, Banque.class, TypeMappingOptions.mapNull(false));
             mapping(ClientDto.class, Client.class, TypeMappingOptions.mapNull(false))
                     .fields("typeClientId","typeclient.id")
                     .fields("magasinId", "magasin.id");
@@ -75,7 +72,6 @@ public class DozerConfig {
                     .fields("prodBonCmdeFourDto", "prodBonCmdeFours");
             mapping(ProdBonCmdeFourDto.class, ProdBonCmdeFour.class, TypeMappingOptions.mapNull(false))
                     .fields("produitId", "produit.id");
-
 
         }
 

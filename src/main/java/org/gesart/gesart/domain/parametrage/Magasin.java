@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
+import org.gesart.gesart.domain.traitement.Entre;
 
 import java.util.List;
 
@@ -29,7 +30,6 @@ import java.util.List;
 @Table(name = "magasin")
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class Magasin extends AbstractAuditEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "seq_mag", sequenceName = "seq_mag",
@@ -46,10 +46,13 @@ public class Magasin extends AbstractAuditEntity {
     private String contactMagasin;
     @Column(name = "responsable")
     private String responsableMag;
-    @OneToMany(mappedBy = "magasin")
-    private List<Produit> produits;
     @JsonIgnore
     @OneToMany(mappedBy = "magasin")
-    private List<Banque> banques;
-
+    private List<Produit> produits;
+    /*@JsonIgnore
+    @OneToMany(mappedBy = "magasin")
+    private List<Banque> banques;*/
+    @JsonIgnore
+    @OneToMany(mappedBy = "magasin")
+    private List<Fournisseur> fournisseurs;
 }

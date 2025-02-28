@@ -47,9 +47,8 @@ public interface ParamsInt {
 	 *
 	 * @return List<ClientDto>
 	 */
-	List<ClientDto> fetchClients();
 
-	Optional<ClientDto> findClientById(Long id);
+	Client getClientById(Long id);
 
 	/**.
 	 * Pagination des listes
@@ -327,4 +326,19 @@ public interface ParamsInt {
 	 */
 
 	Page<TypeReglement> findPageTypeRegl(int pageNo, int pageSize, String sortBy);
+
+	List<ClientDto> fetchClients();
+
+	Client findClientById(Long idClient);
+
+	Optional <Magasin> findMagasinById(Long id);
+
+	Optional <Banque> findBanqueById(Long id);
+
+	Optional <Fournisseur> findFournisseurById(Long id);
+
+	Optional <Succursale> findSuccursaleById(Long id);
+
+	Optional <Produit> findProduitById(Long id);
+
 }

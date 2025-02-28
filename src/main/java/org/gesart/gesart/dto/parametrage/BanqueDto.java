@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.gesart.gesart.domain.parametrage.Magasin;
+import org.gesart.gesart.domain.parametrage.Succursale;
 
 
 import java.util.List;
@@ -23,11 +25,6 @@ public class BanqueDto {
     private String codeBanque;
     private String libellebanque;
     private String contact;
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "banque")
-    private List<Magasin> magasins;*/
-    //private List<SuccursaleDto> succursales;
-    //private MagasinDto magasin = new MagasinDto();
-    private Long magasinId;
-    private String libelleMag;
+    private List<MagasinDto> magasins;
+    private List<SuccursaleDto> succursales;
 }
