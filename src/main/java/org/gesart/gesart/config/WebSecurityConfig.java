@@ -1,8 +1,10 @@
 package org.gesart.gesart.config;
 
 import org.gesart.gesart.security.NUserDetailsService;
+import org.gesart.gesart.security.SecurityService;
 import org.gesart.gesart.security.jwt.AuthEntryPointJwt;
 import org.gesart.gesart.security.jwt.AuthTokenFilter;
+import org.gesart.gesart.service.admin.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -80,6 +82,12 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+
+    @Bean
+    public SecurityService securityService() {
+        return new SecurityService();
     }
 
     /**

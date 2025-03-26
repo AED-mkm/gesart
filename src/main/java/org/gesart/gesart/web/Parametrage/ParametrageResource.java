@@ -64,8 +64,7 @@ public class ParametrageResource {
 	//@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
 
 	@PostMapping(path = "/magasins")
-	//@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN) or " +
-		//	"(hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN))")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public ResponseEntity<MagasinDto> createMag(
 			@Valid @RequestBody final MagasinDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateMg(dto), HttpStatus.CREATED);
@@ -78,9 +77,9 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PreAuthorize("hasRole(\\\"\" + AuthoritiesConstants.ADMIN + \"\\\")) or " +
-			"(hasRole(\\\"\" + MAGASIN_ADMIN + \"\\\"))")
+
 	@PutMapping(path = "/magasins")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public ResponseEntity<MagasinDto> updateMag(
 			@Valid @RequestBody final MagasinDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateMg(dto), HttpStatus.CREATED);
@@ -92,9 +91,9 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
-	@PreAuthorize("hasRole(\\\"\" + AuthoritiesConstants.ADMIN + \"\\\")) or " +
-			"(hasRole('MAGASIN_ADMIN'))")
+
 	@GetMapping("/magasins")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public ResponseEntity<List<MagasinDto>> listeMagasins() {
 		return new ResponseEntity<>(parametreService.fetchMagasins(), HttpStatus.OK);
 	}
@@ -103,7 +102,10 @@ public class ParametrageResource {
 	 * Page
 	 * @return page
 	 */
+
+
 	@GetMapping("magasins/page")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public ResponseEntity<Page<Magasin>> allpage() {
 		return new ResponseEntity<>(parametreService
 				.findPageMagasin(0, 5, "createdDate"), HttpStatus.OK);
@@ -111,6 +113,7 @@ public class ParametrageResource {
 
 
 	@DeleteMapping("/magasins/{id}")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public ResponseEntity<Void> supprimerMagasin( @PathVariable Long id) {
 		try {
 			parametreService.deleteMagasin(id);
@@ -123,6 +126,7 @@ public class ParametrageResource {
 	}
 
 	@GetMapping("/magasins/{idMagasin}")
+	@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN)")
 	public Optional<Magasin> geMagasinbyId(@PathVariable Long idMagasin) {
 		return parametreService.findMagasinById(idMagasin);
 	}
@@ -136,6 +140,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PostMapping(path = "/banques")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<BanqueDto> createBanque(
 			@Valid @RequestBody final BanqueDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
@@ -149,6 +154,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/banques")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<BanqueDto> updateMag(
 			@Valid @RequestBody final BanqueDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateBanque(dto), HttpStatus.CREATED);
@@ -161,6 +167,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/banques")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<BanqueDto>> listeBanques() {
 		return new ResponseEntity<>(parametreService.fetchBanques(), HttpStatus.OK);
 	}
@@ -171,11 +178,13 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("banques/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<Banque>> allpageBanque() {
 		return new ResponseEntity<>(parametreService
 				.findPageBanque(0, 5, "createdDate"), HttpStatus.OK);
 	}
 	@DeleteMapping("/banques/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimerBanque( @PathVariable Long id) {
 		try {
 			parametreService.deleteBanque(id);
@@ -189,6 +198,7 @@ public class ParametrageResource {
 
 
 	@GetMapping("/banques/{idBanaue}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<Banque> geBanquebyId(@PathVariable Long idBanaue) {
 		return parametreService.findBanqueById(idBanaue);
 	}
@@ -204,6 +214,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PostMapping(path = "/produits")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<ProduitDto> createprod(
 			@Valid @RequestBody final ProduitDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateProd(dto), HttpStatus.CREATED);
@@ -218,6 +229,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/produits")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<ProduitDto> updateMag(
 			@Valid @RequestBody final ProduitDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateProd(dto), HttpStatus.CREATED);
@@ -230,6 +242,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/produits")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<ProduitDto>> listeProduits() {
 		return new ResponseEntity<>(parametreService.fetchProduits(), HttpStatus.OK);
 	}
@@ -239,12 +252,14 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("produits/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<Produit>> allpageProduit() {
 		return new ResponseEntity<>(parametreService
 				.findPageProduit(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/produits/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimerproduit( @PathVariable Long id) {
 		try {
 			parametreService.deleteProduit(id);
@@ -259,7 +274,9 @@ public class ParametrageResource {
 
 
 	@GetMapping("/produits/{idProd}")
-	public Optional<Produit> getProduitById(@PathVariable Long idProd) {
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
+	public Optional<Produit> getProduitById(@PathVariable Long idProd)
+	{
 		return parametreService.findProduitById(idProd);
 	}
 
@@ -272,7 +289,7 @@ public class ParametrageResource {
 	 * @return ClientDto response entity
 	 */
 	@PostMapping(path = "/clients")
-
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<ClientDto> createClt(
 			@Valid @RequestBody final ClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateClient(dto), HttpStatus.CREATED);
@@ -287,6 +304,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/clients")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<ClientDto> updateClt(
 			@Valid @RequestBody final ClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateClient(dto), HttpStatus.CREATED);
@@ -299,6 +317,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/clients")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<ClientDto>> listeClients() {
 		return new ResponseEntity<>(parametreService.fetchClients(), HttpStatus.OK);
 	}
@@ -311,11 +330,13 @@ public class ParametrageResource {
 	 * @return client
 	 */
 	@GetMapping("/clients/{idClient}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Client getClientById(@PathVariable Long idClient) {
 		 return parametreService.findClientById(idClient);
 	}
 
 	@DeleteMapping("/clients/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimerClient( @PathVariable Long id) {
 		try {
 			parametreService.deleteClient(id);
@@ -335,6 +356,7 @@ public class ParametrageResource {
 	 * @return TypeClientDto response entity
 	 */
 	@PostMapping(path = "/type_clients")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TypeClientDto> createTypeClt(
 			@Valid @RequestBody final TypeClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeClt(dto), HttpStatus.CREATED);
@@ -349,6 +371,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/type_clients")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TypeClientDto> updateTypeClt(
 			@Valid @RequestBody final TypeClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeClt(dto), HttpStatus.CREATED);
@@ -361,6 +384,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/type_clients")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<TypeClientDto>> listeTypeClt() {
 		return new ResponseEntity<>(parametreService.fetchTypeClient(), HttpStatus.OK);
 	}
@@ -371,6 +395,7 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("type_clients/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<TypeClient>> allpageTypeClient() {
 		return new ResponseEntity<>(parametreService
 				.findPageTypeClient(0, 5, "createdDate"), HttpStatus.OK);
@@ -378,6 +403,7 @@ public class ParametrageResource {
 
 
 	@DeleteMapping("/type_clients/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimertypeClient( @PathVariable Long id) {
 		try {
 			parametreService.deleteTypeClient(id);
@@ -391,6 +417,7 @@ public class ParametrageResource {
 
 
 	@GetMapping("/type_clients/{idTypeClt}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<TypeClient> getTypeReglementById(@PathVariable Long idTypeClt) {
 		return parametreService.findTypeClientById(idTypeClt);
 	}
@@ -404,6 +431,7 @@ public class ParametrageResource {
 	 * @return SuccursaleDto response entity
 	 */
 	@PostMapping(path = "/succursales")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<SuccursaleDto> createSucc(
 			@Valid @RequestBody final SuccursaleDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateSucc(dto), HttpStatus.CREATED);
@@ -418,6 +446,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/succursales")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<SuccursaleDto> updateSucc(
 			@Valid @RequestBody final SuccursaleDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateSucc(dto), HttpStatus.CREATED);
@@ -430,6 +459,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/succursales")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<SuccursaleDto>> listeSuccursales() {
 		return new ResponseEntity<>(parametreService.fetchSuccursales(), HttpStatus.OK);
 	}
@@ -440,12 +470,14 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("succursales/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<Succursale>> allpageSucc() {
 		return new ResponseEntity<>(parametreService
 				.findPageSuccursale(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/succursales/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimersucc( @PathVariable Long id) {
 		try {
 			parametreService.deleteSuccursale(id);
@@ -459,6 +491,7 @@ public class ParametrageResource {
 
 
 	@GetMapping("/succursales/{idsucc}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<Succursale> findSuccursaleById(@PathVariable Long idsucc) {
 		return parametreService.findSuccursaleById(idsucc);
 	}
@@ -472,6 +505,7 @@ public class ParametrageResource {
 	 * @return FournisseurDto response entity
 	 */
 	@PostMapping(path = "/fournisseurs")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<FournisseurDto> createfssr(
 			@Valid @RequestBody final FournisseurDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateFour(dto), HttpStatus.CREATED);
@@ -486,6 +520,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@PutMapping(path = "/fournisseurs")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<FournisseurDto> updateFours(
 			@Valid @RequestBody final FournisseurDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateFour(dto), HttpStatus.CREATED);
@@ -497,6 +532,7 @@ public class ParametrageResource {
 	 * @return the response entity
 	 */
 	@GetMapping("/fournisseurs")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<FournisseurDto>> listeFournisseurs() {
 		return new ResponseEntity<>(parametreService.fetchFournisseurs(), HttpStatus.OK);
 	}
@@ -507,6 +543,7 @@ public class ParametrageResource {
 	 * @return void
 	 */
 	@DeleteMapping("/fournisseurs/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimerFournissseur( @PathVariable Long id) {
 		try {
 			parametreService.deleteFournisseur(id);
@@ -523,12 +560,14 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("fournisseurs/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<Fournisseur>> allpageFour() {
 		return new ResponseEntity<>(parametreService
 				.findPageFourn(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	@GetMapping("/fournisseurs/{idFour}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<Fournisseur> getFournisseurById(@PathVariable Long idFour) {
 		return parametreService.findFournisseurById(idFour);
 	}
@@ -540,6 +579,7 @@ public class ParametrageResource {
 	 */
 
 	@PostMapping(path = "/taxes")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TaxeDto> createTaxe(
 			@Valid @RequestBody final TaxeDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
@@ -552,6 +592,7 @@ public class ParametrageResource {
 	 */
 
 	@PutMapping(path = "/taxes")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TaxeDto> updateTaxe(
 			@Valid @RequestBody final TaxeDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTaxes(dto), HttpStatus.CREATED);
@@ -563,6 +604,7 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("/taxes")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<TaxeDto>> listeTaxes() {
 		return new ResponseEntity<>(parametreService.fetchTaxes(), HttpStatus.OK);
 	}
@@ -573,12 +615,14 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("taxes/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<Taxe>> allpageTaxe() {
 		return new ResponseEntity<>(parametreService
 				.findPageTaxe(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/taxes/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimertaxe( @PathVariable Long id) {
 		try {
 			parametreService.deleteTaxe(id);
@@ -592,6 +636,7 @@ public class ParametrageResource {
 
 
 	@GetMapping("/taxes/{idTaxe}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<Taxe> getTaxeById(@PathVariable Long idTaxe) {
 		return parametreService.findTaxeById(idTaxe);
 	}
@@ -602,6 +647,7 @@ public class ParametrageResource {
 	 */
 
 	@PostMapping(path = "/type_reglements")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TypeReglDto> createTyperegl(
 			@Valid @RequestBody final TypeReglDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
@@ -614,6 +660,7 @@ public class ParametrageResource {
 	 */
 
 	@PutMapping(path = "/type_reglements")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<TypeReglDto> update(
 			@Valid @RequestBody final TypeReglDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateTypeRegl(dto), HttpStatus.CREATED);
@@ -624,6 +671,7 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("/type_reglements")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<List<TypeReglDto>> liste() {
 		return new ResponseEntity<>(parametreService.fetchTypeRegl(), HttpStatus.OK);
 	}
@@ -634,12 +682,14 @@ public class ParametrageResource {
 	 */
 
 	@GetMapping("type_reglements/page")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Page<TypeReglement>> allpageTypeRegl() {
 		return new ResponseEntity<>(parametreService
 				.findPageTypeRegl(0, 5, "createdDate"), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/type_reglements/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public ResponseEntity<Void> supprimerTyperegl( @PathVariable Long id) {
 		try {
 			parametreService.deleteTyperegl(id);
@@ -654,6 +704,7 @@ public class ParametrageResource {
 
 
 	@GetMapping("/type_reglements/{idType}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 	public Optional<TypeReglement> findTypeReglementById(@PathVariable Long idType) {
 		return parametreService.findTypeReglementById(idType);
 	}
@@ -665,6 +716,7 @@ public class ParametrageResource {
 	 * @return produit
 	 */
 	@PutMapping("/update-prix/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN)")
 		public ResponseEntity<Produit>updatePrix(
 				@PathVariable Long id,
 				@RequestParam BigDecimal nouveauPrix
@@ -681,6 +733,8 @@ public class ParametrageResource {
 	 */
 
 	@PutMapping("/update-cout-achat/{id}")
+	@PreAuthorize("hasAuthority(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN) " +
+			" and @securityService.hasAccessToMagasin(#idMagasin))")
 			public ResponseEntity<Produit> updateCoutAchat(
 					@PathVariable Long id,
 					@RequestParam BigDecimal nouveauCoutAchat) {

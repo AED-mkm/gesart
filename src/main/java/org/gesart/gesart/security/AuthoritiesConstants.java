@@ -7,15 +7,8 @@ package org.gesart.gesart.security;
 public final class AuthoritiesConstants {
 
     public static final String ADMIN = "ROLE_ADMIN";
-
     public static final String MAGASIN_ADMIN = "MAGASIN_ADMIN";
-
-    public static final String PROPRIETAIRE = "ROLE_PROPRIETAIRE";
-
-    public static final String TEACHER = "ROLE_TEACHER";
-
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
-
     private AuthoritiesConstants() {
     }
 }

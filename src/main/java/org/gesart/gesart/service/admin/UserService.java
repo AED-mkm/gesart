@@ -22,6 +22,7 @@ import org.gesart.gesart.security.AuthoritiesConstants;
 import org.gesart.gesart.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,49 +68,53 @@ public class UserService {
 
     @Transactional
     public User creerUtilisateur(final UserDto userDto) {
-        String generatePassword = RandomUtil.generatePassword();
-        // Vérifier si le login ou l'email existent déjà
-        userRepository.findOneByStatutAndLogin(TypeStatut.ACTIF, userDto.getLogin().toLowerCase())
-                .ifPresent(existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
-                    if (!removed) {
-                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Le nom d'utilisateur est déjà utilisé");
-                    }
-                });
-        userRepository.findOneByStatutAndEmailIgnoreCase(TypeStatut.ACTIF, userDto.getEmail())
-                .ifPresent(existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
-                    if (!removed) {
-                        throw new ResponseStatusException(HttpStatus.CONFLICT, "L'adresse email est déjà utilisée");
-                    }
-                });
+	    String generatePassword = RandomUtil.generatePassword();
+	    // Vérifier si le login ou l'email existent déjà
+	    userRepository.findOneByStatutAndLogin(TypeStatut.ACTIF, userDto.getLogin().toLowerCase())
+			    .ifPresent(existingUser -> {
+				    boolean removed = removeNonActivatedUser(existingUser);
+				    if (!removed) {
+					    throw new ResponseStatusException(HttpStatus.CONFLICT, "Le nom d'utilisateur est déjà utilisé");
+				    }
+			    });
+	    userRepository.findOneByStatutAndEmailIgnoreCase(TypeStatut.ACTIF, userDto.getEmail())
+			    .ifPresent(existingUser -> {
+				    boolean removed = removeNonActivatedUser(existingUser);
+				    if (!removed) {
+					    throw new ResponseStatusException(HttpStatus.CONFLICT, "L'adresse email est déjà utilisée");
+				    }
+			    });
 
-        // Création de l'utilisateur
-        User newUser = mapper.map(userDto, User.class);
-        newUser.setLogin(userDto.getLogin().toLowerCase());
-        newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
-        newUser.setStatut(TypeStatut.ACTIF);
+	    // Création de l'utilisateur
+	    User newUser = mapper.map(userDto, User.class);
+	    newUser.setLogin(userDto.getLogin().toLowerCase());
+	    newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+	    newUser.setActivationKey(RandomUtil.generateActivationKey());
+	    newUser.setStatut(TypeStatut.ACTIF);
 
-        // Vérifier et assigner les rôles
-        if (userDto.getRoleName() != null && !userDto.getRoleName().isEmpty()) {
-            Set<Role> authorities = roleRepository.findByNameIn(Collections.singleton(userDto.getRoleName()));
-            if (authorities.isEmpty()) {
-                throw new IllegalArgumentException("Aucun rôle valide trouvé dans : " + userDto.getRoleName());
-            }
-            newUser.setAuthoritySet(authorities);
+	    // Vérifier et assigner les rôles
+	    Set<Role> authorities = null;
+	    if (userDto.getRoleName() != null && !userDto.getRoleName().isEmpty()) {
+		    authorities = roleRepository.findByNameIn(Collections.singleton(userDto.getRoleName()));
+		    if (authorities.isEmpty()) {
+			    throw new IllegalArgumentException("Aucun rôle valide trouvé dans : " + userDto.getRoleName());
+		    }
+		    newUser.setAuthoritySet(authorities);
+	    }
 
-        }
-        // Vérifier et assigner un magasin si c'est un admin de magasin
-        if (AuthoritiesConstants.MAGASIN_ADMIN.equals(userDto.getRoleName()) &&
-                userDto.getMagasin().getId() != null) {
+	    log.info("AAAAAAAAAAAAAAAAAaa:" + authorities);
 
-            Magasin magasin = magasinRepository.findById(userDto.getMagasin().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Magasin non trouvé"));
-            newUser.setMagasin(magasin);
-        }
-        // Sauvegarde de l'utilisateur
-        return userRepository.save(newUser);
+
+	    // Vérifier et assigner un magasin si c'est un admin de magasin
+	    if (AuthoritiesConstants.MAGASIN_ADMIN.equals(userDto.getRoleName()) &&
+			    userDto.getMagasin().getId() != null) {
+
+		    Magasin magasin = magasinRepository.findById(userDto.getMagasin().getId())
+				    .orElseThrow(() -> new EntityNotFoundException("Magasin non trouvé"));
+		    newUser.setMagasin(magasin);
+	    }
+	    // Sauvegarde de l'utilisateur
+	    return userRepository.save(newUser);
     }
 
 
@@ -366,11 +371,6 @@ public class UserService {
      */
     @Transactional(readOnly = true)
     public List<UserDto> getAllCaissierByBoutique(final Long boutiqueId) {
-       /* return userRepository.findAllByStatut(
-                        TypeStatut.ACTIF).stream().filter(user -> user.getDefaultBoutique() != null
-                        && user.getDefaultBoutique().getId().equals(boutiqueId))
-                .map(sfdUser -> mapper.map(sfdUser, UserDto.class)).collect(Collectors.toList());
-   */
         return null;
     }
 
@@ -408,5 +408,6 @@ public class UserService {
         user.getAuthoritySet().add(role);
         userRepository.save(user);
     }
+
 
 }
