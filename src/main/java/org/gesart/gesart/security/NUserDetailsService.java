@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings("ALL")
 public class NUserDetailsService implements UserDetailsService {
 
-
     private final UserRepository userRepository;
 
     /**
@@ -68,7 +67,7 @@ public class NUserDetailsService implements UserDetailsService {
      * @return spring security user {@link org.springframework.security.core.userdetails.User}
      */
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(final User user) {
-        List<GrantedAuthority> grantedAuthorities = user.getProfil().getAuthorities().stream()
+        List<GrantedAuthority> grantedAuthorities = user.getAuthoritySet().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(user.getLogin(),

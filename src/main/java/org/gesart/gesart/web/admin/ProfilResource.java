@@ -5,9 +5,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.gesart.gesart.dto.admin.ProfilDto;
-import org.gesart.gesart.serviceImpl.admin.ProfileService;
+import org.gesart.gesart.service.admin.ProfilService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("ALL")
@@ -30,7 +31,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ProfilResource {
 
-    private final ProfileService profileService;
+    private final ProfilService profilService;
 
     /**
      * {@code POST  /profils} : Create a new profil.
@@ -52,7 +53,7 @@ public class ProfilResource {
         if (profilDTO.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new profil cannot already have an ID");
         }
-        ProfilDto result = profileService.save(profilDTO);
+        ProfilDto result = profilService.save(profilDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -75,8 +76,26 @@ public class ProfilResource {
         if (profilDTO.getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
         }
-        ProfilDto result = profileService.save(profilDTO);
+        ProfilDto result = profilService.save(profilDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * {@code GET  /profils} : get all the profils.
+     *
+     * @param boutiqueId
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of profils in body.
+     */
+    @GetMapping("/profils")
+    @Operation(summary = "Endpoint permettant de recuperer la liste des profils.", tags = {"profil",
+            "get"}, responses = {@ApiResponse(responseCode = "200", description = "Si la recuperation reussi"),
+            @ApiResponse(responseCode = "401", description = "Paramères de connexion incorrectes"),
+            @ApiResponse(responseCode = "500", description = "En cas d'erreur inattendue")})
+    public ResponseEntity<List<ProfilDto>> getAllProfils(
+            @RequestParam(name = "boutiqueId", required = false) final Long boutiqueId) {
+        log.debug("REST request to get a page of Profils");
+        List<ProfilDto> page = profilService.findAll(boutiqueId);
+        return ResponseEntity.ok().body(page);
     }
 
     /**
@@ -94,7 +113,7 @@ public class ProfilResource {
                     @ApiResponse(responseCode = "500", description = "En cas d'erreur inattendue")})
     public ResponseEntity<ProfilDto> getProfil(@PathVariable final Long id) {
         log.debug("REST request to get Profil : {}", id);
-        Optional<ProfilDto> profilDTO = profileService.findOne(id);
+        Optional<ProfilDto> profilDTO = profilService.findOne(id);
         return ResponseEntity.ok(profilDTO.get());
     }
 
@@ -113,7 +132,7 @@ public class ProfilResource {
                     @ApiResponse(responseCode = "500", description = "En cas d'erreur inattendue")})
     public ResponseEntity<Void> deleteProfil(@PathVariable final Long id) {
         log.debug("REST request to delete Profil : {}", id);
-        profileService.delete(id);
+        profilService.delete(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

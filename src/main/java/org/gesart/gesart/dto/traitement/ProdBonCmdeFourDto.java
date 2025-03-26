@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 import java.math.BigDecimal;
 
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class ProdBonCmdeFourDto {
+public class ProdBonCmdeFourDto extends AbstractAuditEntityDto {
     private Long id;
     private BigDecimal qteProdCmde;
     private BigDecimal prixProdCmde;

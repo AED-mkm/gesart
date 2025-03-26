@@ -31,7 +31,7 @@ public class OpenApiConfig {
                 )
                // .addSecurityItem(new SecurityRequirement().addList("basic"))
                 .info(new Info()
-                        .title("API")
+                        .title("E.RECRUTEMENT API")
                         .description("Documentation des APIs Restful.")
                         .version("1.0.0"));
     }

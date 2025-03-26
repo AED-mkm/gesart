@@ -1,5 +1,4 @@
 package org.gesart.gesart.domain.parametrage;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,7 +18,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
-import org.gesart.gesart.domain.traitement.Operation;
 
 import java.util.List;
 

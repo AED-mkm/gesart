@@ -4,6 +4,7 @@ package org.gesart.gesart.serviceImpl.Parametrage;
 import com.github.dozermapper.core.Mapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.gesart.gesart.domain.admin.User;
 import org.gesart.gesart.domain.historique.HistoriqueCout;
 import org.gesart.gesart.domain.historique.HistoriquePrix;
 import org.gesart.gesart.domain.parametrage.Client;
@@ -15,7 +16,6 @@ import org.gesart.gesart.domain.parametrage.Taxe;
 import org.gesart.gesart.domain.parametrage.TypeClient;
 import org.gesart.gesart.domain.parametrage.Fournisseur;
 import org.gesart.gesart.domain.parametrage.TypeReglement;
-import org.gesart.gesart.domain.admin.User;
 import org.gesart.gesart.dto.parametrage.ClientDto;
 import org.gesart.gesart.dto.parametrage.BanqueDto;
 import org.gesart.gesart.dto.parametrage.ProduitDto;
@@ -25,6 +25,7 @@ import org.gesart.gesart.dto.parametrage.SuccursaleDto;
 import org.gesart.gesart.dto.parametrage.TaxeDto;
 import org.gesart.gesart.dto.parametrage.TypeClientDto;
 import org.gesart.gesart.dto.parametrage.TypeReglDto;
+import org.gesart.gesart.repository.admin.UserRepository;
 import org.gesart.gesart.repository.historique.HistoriqueCoutRepository;
 import org.gesart.gesart.repository.historique.HistoriquePrixRepository;
 import org.gesart.gesart.service.ParamsInt;
@@ -37,8 +38,6 @@ import org.gesart.gesart.repository.parametrage.BanqueRepository;
 import org.gesart.gesart.repository.parametrage.MagasinRepository;
 import org.gesart.gesart.repository.parametrage.ProduitRepository;
 import org.gesart.gesart.repository.parametrage.TypeReglRepository;
-import org.gesart.gesart.repository.admin.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +60,7 @@ import java.util.stream.Collectors;
 @Service
 public class ParametreService implements ParamsInt {
 
-	@Autowired
+
 	private final Mapper mapper;
 	private final ClientRepository clientRepository;
 	private final BanqueRepository banqueRepository;
@@ -134,8 +133,7 @@ public class ParametreService implements ParamsInt {
 	 */
 	@Override
 	public  Optional<Magasin> findMagasinById(Long id) {
-		return Optional.ofNullable(magasinRepository.findMagasinById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Magasin non trouvé")));
+		return Optional.ofNullable(magasinRepository.findMagasinById(id));
 	}
 
 	/**

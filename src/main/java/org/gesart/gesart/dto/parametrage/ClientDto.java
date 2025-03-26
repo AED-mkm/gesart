@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 
 /**
@@ -17,16 +17,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class ClientDto {
+public class ClientDto extends AbstractAuditEntityDto {
 
     private Long id;
     private String codeClient;
     private String denomination;
     private String contactClient;
     private String adresseClient;
-   /* @OneToMany(mappedBy = "client")
-    private List<TypeClient> typeClients;*/
-    //private MagasinDto magasin = new MagasinDto();
     private Long typeClientId;
     private Long magasinId;
     private String libelleMag;

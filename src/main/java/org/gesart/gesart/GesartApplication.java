@@ -3,6 +3,8 @@ package org.gesart.gesart;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.util.StringUtils;
@@ -15,7 +17,9 @@ import java.util.Arrays;
 @SuppressWarnings("ALL")
 @Slf4j
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "org.gesart.gesart.repository")
+@Configuration
+@EnableJpaRepositories(basePackages ="org.gesart.gesart.repository")
+
 public class GesartApplication {
     /**
      * Main.

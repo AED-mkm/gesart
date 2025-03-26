@@ -2,6 +2,7 @@ package org.gesart.gesart.web.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +15,14 @@ import org.gesart.gesart.dto.admin.PasswordChangedDto;
 import org.gesart.gesart.dto.admin.UserDto;
 import org.gesart.gesart.repository.admin.UserRepository;
 import org.gesart.gesart.security.AuthoritiesConstants;
-import org.gesart.gesart.serviceImpl.admin.UserService;
+import org.gesart.gesart.service.admin.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -64,17 +66,21 @@ public class UserResource {
                     @ApiResponse(responseCode = "400", description = "En cas d'erreur de validation"),
                     @ApiResponse(responseCode = "401", description = "Utilisateur non connecté"),
                     @ApiResponse(responseCode = "500", description = "En cas d'erreur inattendue")})
-    public ResponseEntity<Void> createUser(@Valid @RequestBody final UserDto userDTO) {
-        log.debug("REST request to save User : {}", userDTO);
-        if (userDTO.getId() != null) {
+    public ResponseEntity<Void> createUser(@Valid @RequestBody final UserDto userDto) {
+        log.debug("REST request to save User : {}", userDto);
+        if (userDto.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Un nouveau utilisateur ne peut pas avoir un ID");
         } else if (userRepository.findOneByStatutAndLogin(TypeStatut.ACTIF,
-                userDTO.getLogin().toLowerCase()).isPresent()) {
+                userDto.getLogin().toLowerCase()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Le nom d'utilisateur est déjà utilisé");
+        } else if (userRepository.findOneByStatutAndEmailIgnoreCase(TypeStatut.ACTIF,
+                userDto.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "L'adresse email est déjà utilisée");
         } else {
-            userService.registerUser(userDTO);
+            userService.creerUtilisateur(userDto);
             return ResponseEntity.ok().build();
         }
     }
@@ -134,8 +140,9 @@ public class UserResource {
 
 
     /**
+     * GET /users : get all users.
      *
-     * @return UserDto
+     * @return the ResponseEntity with status 200 (OK) and with body all users
      */
     @GetMapping("/users")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
@@ -150,11 +157,10 @@ public class UserResource {
     }
 
     /**
-     *
-     * @return Profil
+     * @return a string list of the all of the roles
      */
     @GetMapping("/users/profils")
-     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    // @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     @Operation(summary = "Endpoint pour recuperer l'enesemble des profils des utilisateurs.", tags = {"account",
             "GET", "profils"}, responses = {
             @ApiResponse(responseCode = "200", description = "Lorsque le changement du mot de passe reussie"),
@@ -165,11 +171,12 @@ public class UserResource {
     }
 
     /**
+     * GET /users/:login : get the "login" user.
      *
-     * @param login
-     * @return UserDto
+     * @param login the login of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body
+     * the "login" user, or with status 404 (Not Found)
      */
-
     @GetMapping("/users/{login:" + SecurityConstants.LOGIN_REGEX + "}")
     @Operation(summary = "Endpoint pour recuperer un utilisateur a partir de son login.", tags = {"account",
             "GET", "user", "login"}, responses = {
@@ -183,9 +190,10 @@ public class UserResource {
     }
 
     /**
+     * DELETE /users/:login : delete the "login" User.
      *
-     * @param login
-     * @return true or false
+     * @param login the login of the user to delete
+     * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + SecurityConstants.LOGIN_REGEX + "}")
     /*    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")*/
@@ -214,6 +222,17 @@ public class UserResource {
                 || password.length() > SecurityConstants.PASSWORD_MAX_LENGTH;
     }
 
+    /**
+     * Envoie de mail pour modifier mot de passe.
+     *
+     * @param email
+     * @return return true
+     */
+    @GetMapping(path = "/reset-password/init")
+    @Operation(summary = "Envoie de mail pour modifier mot de passe", tags = {"User"})
+    public ResponseEntity<Boolean> sendMailToResetPassword(@RequestParam final String email) {
+        return new ResponseEntity<>(userService.sendMailToResetPassword(email), HttpStatus.OK);
+    }
 
     /**
      * Completer la modification du mot de passe.
@@ -250,5 +269,63 @@ public class UserResource {
         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     }
 
+    /**
+     * GET /users : get all users.
+     *
+     * @param id
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     */
+    @GetMapping("/users/by-boutique/{id}")
+    @Operation(summary = "Endpoint pour recuperer l'enesemble des caissier.",
+            tags = {"account", "GET", "users"}, responses = {
+            @ApiResponse(responseCode = "200", description = "Lorsque le changement du mot de passe reussie"),
+            @ApiResponse(responseCode = "401", description = "Utilisateur non connecté"),
+            @ApiResponse(responseCode = "500", description = "En cas d'erreur inattendue")})
+    public ResponseEntity<List<UserDto>> getAllCaissierByBoutique(@PathVariable final Long id) {
+        final List<UserDto> page = userService.getAllCaissierByBoutique(id);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
 
+    /**
+     * Donner une permission à un utilisateur
+     * @param userId
+     * @param permissionId
+     * @return
+     */
+
+    @PostMapping("/users/{userId}/permissions/{permissionId}")
+    public ResponseEntity<Void> ajouterPermissionAUtilisateurParId(
+            @PathVariable("userId") Long userId,
+            @PathVariable("permissionId") Long permissionId) {
+        try {
+            userService.ajouterPermissionAUtilisateur(userId, permissionId);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**+
+     * donner un role à un utilisateur
+     * @param userId
+     * @param roleName
+     * @return
+     */
+
+    @PostMapping("/users/{userId}/roles/{roleName}")
+    public ResponseEntity<String> ajouterRoleAUtilisateur(
+            @PathVariable Long userId,
+            @PathVariable String roleName) {
+        try {
+            userService.ajouterRoleAUtilisateur(userId, roleName);
+            return ResponseEntity.ok("Rôle ajouté avec succès !");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur interne du serveur");
+        }
+    }
 }

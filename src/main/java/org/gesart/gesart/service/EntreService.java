@@ -10,5 +10,7 @@ public interface EntreService {
 	EntreDto createAndUpdateEntreMag(EntreDto dto);
 	List<EntreDto> fetchEntre();
 
+	/*public EntreDto getEntreeStock(Long id);*/
+
 
 }

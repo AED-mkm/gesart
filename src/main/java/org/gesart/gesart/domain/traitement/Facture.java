@@ -15,8 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
+import org.gesart.gesart.domain.parametrage.Client;
+import org.gesart.gesart.domain.parametrage.Magasin;
 
 import java.time.LocalDate;
 
@@ -49,5 +50,8 @@ public class Facture extends AbstractAuditEntity {
    @JoinColumn(name = "mag_id", referencedColumnName = "id")
    @JsonIgnoreProperties(value = "facture", allowSetters = true)
    private Magasin magasin;
-
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "client", referencedColumnName = "id")
+   @JsonIgnoreProperties(value = "facture", allowSetters = true)
+   private Client client;
 }

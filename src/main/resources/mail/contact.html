@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+  <head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  </head>
+  <body>
+    <p>Salut <span th:if="${admin_name.length() > 0}">M/Mme <span th:text="${admin_name}"></span></span>!</p>
+    <p>Ceci est un message d'un visiteur sur votre plateforme <b>Kossnaana</b></p>
+    <p>Envoyer par M./Mme <span th:text="${nom}"></span> <br/>
+      <span th:if="${email.length()>0}">
+        <b>Email:</b> <span th:text="${email}"></span> <br/>
+      </span>
+      <span th:if="${telephone.length()>0}">
+        <b>Telephone:</b> <span th:text="${telephone}"></span> <br/>
+      </span>
+      <span th:if="${date.length()>0}">
+        <b>Date:</b> <span th:text="${date}"></span> <br/>
+      </span>
+    </p>
+    <p th:text="${message}"></p>
+    <p>
+      Bonne lecture, <br/>
+      <em>Kossnaana plateform</em>
+    </p>
+  </body>
+</html>

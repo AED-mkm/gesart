@@ -15,9 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.gesart.gesart.domain.admin.AbstractAuditEntity;
 import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.domain.parametrage.Produit;
-import org.gesart.gesart.domain.admin.AbstractAuditEntity;
 
 import java.math.BigDecimal;
 

@@ -6,7 +6,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.gesart.gesart.domain.traitement.Entre;
+import org.gesart.gesart.domain.traitement.LigneDeVente;
 import org.gesart.gesart.domain.traitement.ProdBonCmdeFour;
+import org.gesart.gesart.domain.traitement.Vente;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
+import org.gesart.gesart.dto.traitement.LigneVenteDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class ProduitDto {
+public class ProduitDto extends AbstractAuditEntityDto {
     private Long id;
     private String numProduit;
     private String designation;
@@ -37,7 +41,6 @@ public class ProduitDto {
     private String libelleMag;
     private List<ProdBonCmdeFour> prodBonCmdeFour;
     private BigDecimal prixProdCmde;
-    private Long entreId;
-
+    private List<LigneVenteDto> ligneVenteDtos;
 
 }

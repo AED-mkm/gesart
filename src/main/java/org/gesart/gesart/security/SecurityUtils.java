@@ -1,13 +1,17 @@
 package org.gesart.gesart.security;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
-
+/**
+ * @author : <a href="siguizana08@gmail.com"> BRAHIMA TRAORE </a>.
+ * @version : 1.0
+ **/
 
 @Slf4j
 public final class SecurityUtils {
@@ -15,23 +19,19 @@ public final class SecurityUtils {
     private SecurityUtils() {
     }
 
-    /**
-     * Get the login of the current user.
-     *
-     * @return the login of the current user
-     */
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-                .map(authentication -> {
-                    if (authentication.getPrincipal() instanceof UserDetails) {
-                        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                        return springSecurityUser.getUsername();
-                    } else if (authentication.getPrincipal() instanceof String) {
-                        return (String) authentication.getPrincipal();
-                    }
-                    return null;
-                });
+        if (securityContext == null || securityContext.getAuthentication() == null) {
+            return Optional.empty();  // 🔹 Évite NullPointerException
+        }
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            return Optional.of(((UserDetails) authentication.getPrincipal()).getUsername());
+        } else if (authentication.getPrincipal() instanceof String) {
+            return Optional.of((String) authentication.getPrincipal());
+        }
+
+        return Optional.empty();
     }
 
     /**

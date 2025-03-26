@@ -61,12 +61,15 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
+	//@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+
 	@PostMapping(path = "/magasins")
+	//@PreAuthorize("hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).ADMIN) or " +
+		//	"(hasRole(T(org.gesart.gesart.security.AuthoritiesConstants).MAGASIN_ADMIN))")
 	public ResponseEntity<MagasinDto> createMag(
 			@Valid @RequestBody final MagasinDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateMg(dto), HttpStatus.CREATED);
 	}
-
 
 	/**
 	 * Update mag response entity.
@@ -75,6 +78,8 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
+	@PreAuthorize("hasRole(\\\"\" + AuthoritiesConstants.ADMIN + \"\\\")) or " +
+			"(hasRole(\\\"\" + MAGASIN_ADMIN + \"\\\"))")
 	@PutMapping(path = "/magasins")
 	public ResponseEntity<MagasinDto> updateMag(
 			@Valid @RequestBody final MagasinDto dto) {
@@ -87,6 +92,8 @@ public class ParametrageResource {
 	 *
 	 * @return the response entity
 	 */
+	@PreAuthorize("hasRole(\\\"\" + AuthoritiesConstants.ADMIN + \"\\\")) or " +
+			"(hasRole('MAGASIN_ADMIN'))")
 	@GetMapping("/magasins")
 	public ResponseEntity<List<MagasinDto>> listeMagasins() {
 		return new ResponseEntity<>(parametreService.fetchMagasins(), HttpStatus.OK);
@@ -119,25 +126,6 @@ public class ParametrageResource {
 	public Optional<Magasin> geMagasinbyId(@PathVariable Long idMagasin) {
 		return parametreService.findMagasinById(idMagasin);
 	}
-
-	/**
-	 * retourne le magasin de l'utilisateur connecté
-	 * @param id
-	 * @return magasin
-	 */
-
-
-	@GetMapping("/{id}")
-	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\") or (\"" + AuthoritiesConstants.PROPRIETAIRE + "\")" +
-			"and #id == @parametreService.getMagasinId(principal.id))")
-		public ResponseEntity<Magasin> getMagasin(@PathVariable Long id) {
-			Optional<Magasin> magasin = parametreService.findById(id);
-			if (magasin.isPresent()) {
-				return ResponseEntity.ok(magasin.get());
-			} else {
-				return ResponseEntity.notFound().build();
-			}
-		}
 
 	/**
 	 * .
@@ -284,6 +272,7 @@ public class ParametrageResource {
 	 * @return ClientDto response entity
 	 */
 	@PostMapping(path = "/clients")
+
 	public ResponseEntity<ClientDto> createClt(
 			@Valid @RequestBody final ClientDto dto) {
 		return new ResponseEntity<>(parametreService.createAndUpdateClient(dto), HttpStatus.CREATED);

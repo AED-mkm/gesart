@@ -1,5 +1,6 @@
 package org.gesart.gesart.domain.parametrage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +20,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
+import org.gesart.gesart.domain.traitement.Facture;
+import org.gesart.gesart.domain.traitement.Vente;
 
+import java.util.List;
 
 
 /**
@@ -55,5 +60,11 @@ public class Client extends AbstractAuditEntity {
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "client", allowSetters = true)
     private Magasin magasin;
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Vente> ventes;
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Facture> factures;
 
 }

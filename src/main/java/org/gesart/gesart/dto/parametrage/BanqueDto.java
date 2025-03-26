@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.domain.parametrage.Succursale;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class BanqueDto {
+public class BanqueDto extends AbstractAuditEntityDto {
     private Long id;
     private String codeBanque;
     private String libellebanque;

@@ -1,7 +1,6 @@
 package org.gesart.gesart.repository.admin;
 
 
-
 import org.gesart.gesart.domain.admin.AdminMail;
 
 import java.util.Optional;

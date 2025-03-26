@@ -11,10 +11,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.gesart.gesart.config.SecurityConstants;
+import org.gesart.gesart.domain.admin.Permission;
+import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.dto.parametrage.MagasinDto;
 
 
 import java.time.Instant;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -31,49 +34,24 @@ public class UserDto {
 
     @Size(min = SecurityConstants.PASSWORD_MIN_LENGTH, max = SecurityConstants.PASSWORD_MAX_LENGTH)
     private String password;
-
     @Size(min = SecurityConstants.PASSWORD_MIN_LENGTH, max = SecurityConstants.PASSWORD_MAX_LENGTH)
     private String currentPassword;
-
     @Email
     @Size(min = 5, max = 254)
     private String email;
-
     private Instant createdDate;
     private String createdBy;
-
-    private boolean activated = true;
-
+    private boolean activated = false;
     private boolean status = true;
-
     @Size(min = 2, max = 10)
     private String langKey;
-
-  //  private byte[] photo;
-
     private String nom;
-
     private String prenom;
-
-  //  private Boolean hasPhoto = Boolean.FALSE;
-
-    private Long profilId;
-
-    private String profilLibelle;
-
-    private ProfilDto profil = new ProfilDto();
-
     private Boolean resetPassword = Boolean.FALSE;
-
-   // private Boolean proprietaire = Boolean.FALSE;
-
-    //private Long magasinId;
-
-    private MagasinDto magasin = new MagasinDto();
-
-    //private Long defaultMagasinId;
-
+    private Set<Permission> permissions;
     private Boolean superAdmin = Boolean.FALSE;
-
     private boolean affectation = Boolean.FALSE;
+    private String roleName;
+    private Magasin magasin;
+    //private Long magasinId;
 }

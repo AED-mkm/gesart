@@ -1,6 +1,5 @@
 package org.gesart.gesart.security.jwt;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
  * @since : 2024/12/15 à 00:16
  */
 
-
 @Data
 @Component
 @Slf4j
@@ -40,8 +38,6 @@ public class TokenProvider {
     @Value("${jwt.security.token-validity-in-seconds-for-remember-me}")
     private int tokenValidityForRememberMe;
     private SecretKey key;
-
-
 
 
     private SecretKey getAuthoritiesKey() {
@@ -58,11 +54,11 @@ public class TokenProvider {
      * @param userDetails
      * @return token
      */
-
     public String generateJwtToken(final UserDetails userDetails) {
         String authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+
         long now = System.currentTimeMillis();
 
         Date validity = new Date(now + this.jwtExpirationMs * 1000);
@@ -83,8 +79,6 @@ public class TokenProvider {
      * @param userDetails
      * @return boolean
      */
-
-
     public boolean validateToken(final String token, final UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

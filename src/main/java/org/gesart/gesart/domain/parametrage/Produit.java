@@ -18,9 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.gesart.gesart.domain.traitement.Entre;
-import org.gesart.gesart.domain.traitement.ProdBonCmdeFour;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
+import org.gesart.gesart.domain.traitement.ProdBonCmdeFour;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -69,13 +68,14 @@ public class Produit extends AbstractAuditEntity {
     private String typeEmballage;
     @OneToMany(mappedBy = "produit")
     private List<ProdBonCmdeFour> prodBonCmdeFour;
+    /*@JsonIgnore
+    @OneToMany(mappedBy = "produit")
+    private List<LigneDeVente> ligneDeVentes;*/
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mag_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = "produit", allowSetters = true)
     private Magasin magasin;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entre", referencedColumnName = "id")
-    @JsonIgnoreProperties(value = "prod_id", allowSetters = true)
-    private Entre entre;
+
+
 }

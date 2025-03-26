@@ -16,7 +16,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
-import org.gesart.gesart.domain.traitement.Entre;
+import org.gesart.gesart.domain.admin.User;
+import org.gesart.gesart.domain.traitement.Vente;
 
 import java.util.List;
 
@@ -49,10 +50,13 @@ public class Magasin extends AbstractAuditEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "magasin")
     private List<Produit> produits;
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "magasin")
-    private List<Banque> banques;*/
     @JsonIgnore
     @OneToMany(mappedBy = "magasin")
     private List<Fournisseur> fournisseurs;
+    @JsonIgnore
+    @OneToMany(mappedBy = "magasin")
+    private List<Vente> ventes;
+    @JsonIgnore
+    @OneToMany(mappedBy = "magasin")
+    private List<User> users;
 }

@@ -1,6 +1,8 @@
 package org.gesart.gesart.config;
 
+@SuppressWarnings("ALL")
 public final class SecurityConstants {
+
     // Regex for acceptable logins
     public static final String LOGIN_REGEX = "^[_.@A-Za-z0-9-]*$";
 

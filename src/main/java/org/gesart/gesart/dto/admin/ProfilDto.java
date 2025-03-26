@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.gesart.gesart.domain.admin.Authority;
+import org.gesart.gesart.domain.admin.Role;
 
 
 import java.util.HashSet;
@@ -27,6 +27,6 @@ public class ProfilDto extends AbstractAuditEntityDto {
     private String description;
 
     @NotNull(message = "Rôle obligatoire.")
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<Role> authorities = new HashSet<>();
 
 }

@@ -1,0 +1,2 @@
+id;created_by;created_date;last_modified_by;last_modified_date;activated;activation_key;email;lang_key;login;password_hash;reset_date;reset_key;profil_id;statut
+1001;anonymousUser;2021-05-19 21:00:54.002;anonymousUser;2021-05-19 21:00:54.001;true;;kossnanacontact@gmail.com;fr;admin;$2y$10$kp1V7UYDEWn17WSK16UcmOnFd1mPFVF6UkLrOOCGtf24HOYt8p1iC;2021-05-19 21:00:54.002;;1001;ACTIF

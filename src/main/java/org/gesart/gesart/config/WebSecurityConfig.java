@@ -1,6 +1,5 @@
 package org.gesart.gesart.config;
 
-
 import org.gesart.gesart.security.NUserDetailsService;
 import org.gesart.gesart.security.jwt.AuthEntryPointJwt;
 import org.gesart.gesart.security.jwt.AuthTokenFilter;
@@ -27,13 +26,12 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity()
+@EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     @Autowired
     private NUserDetailsService userDetailsService;
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
-
 
     /**
      * Jwt token filter.
@@ -109,17 +107,9 @@ public class WebSecurityConfig {
                 .authorizeRequests(auth -> {
                     auth.requestMatchers("/api/users/login",
                             "/api/portail/**",
-                            "/hello/**",
-                            "/api/fournisseur",
-                            "/api/magasins",
-                            "/users/login",
                             "/api/reset-password/*",
                             "/api/activate-compte",
-                            "/api/verif-token-validite",
-                            "/v3/api-docs/**",
-                            "/swagger-ui/**",
-                            "/webjars/**",
-                            "/swagger-ui.html"
+                            "/api/verif-token-validite"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 });

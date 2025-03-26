@@ -19,9 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.gesart.gesart.domain.admin.AbstractAuditEntity;
 import org.gesart.gesart.domain.traitement.BonDeCmdeFour;
 import org.gesart.gesart.domain.traitement.Entre;
-import org.gesart.gesart.domain.admin.AbstractAuditEntity;
 
 import java.util.List;
 

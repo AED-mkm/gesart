@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>Salut M./Mme <span th:if="${NOM.length() > 0}"> <span th:text="${NOM}"></span></span> !</p>
+<p>Votre souscription à kossnaana arrivera à échéance le <span th:if="${DATEFIN.length() > 0}"> <span
+        th:text="${DATEFIN}"></span></span>. Nous vous prions de bien vouloir effectuer votre demande de renouvellement.</p>
+<p>
+    L'équipe Kossnaana vous remercie pour votre fidélité. <br/><br/>
+    <a href="https://www.Kossnaana.com">https://www.Kossnaana.com</a>
+</p>
+</body>
+</html>

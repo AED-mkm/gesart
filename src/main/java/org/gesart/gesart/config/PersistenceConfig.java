@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
-@EnableJpaRepositories("org.gesart.gesart.repository")
+@EnableJpaRepositories("org.sikab.e.recrutement.repository")
 @EnableTransactionManagement
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class PersistenceConfig {

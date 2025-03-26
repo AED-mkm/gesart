@@ -1,29 +1,21 @@
 package org.gesart.gesart.domain.historique;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.gesart.gesart.domain.admin.AbstractAuditEntity;
-import org.gesart.gesart.domain.parametrage.Magasin;
 import org.gesart.gesart.domain.parametrage.Produit;
-import org.gesart.gesart.domain.traitement.ProdBonCmdeFour;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 
 /**

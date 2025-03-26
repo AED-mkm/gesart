@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 
 /**
@@ -15,7 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class TypeClientDto {
+public class TypeClientDto extends AbstractAuditEntityDto {
     private Long id;
     private String code;
     private String libelle;

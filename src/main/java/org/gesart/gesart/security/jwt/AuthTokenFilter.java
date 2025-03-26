@@ -1,5 +1,6 @@
 package org.gesart.gesart.security.jwt;
 
+
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -88,7 +89,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
-
 
     private String resolveToken(final HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);

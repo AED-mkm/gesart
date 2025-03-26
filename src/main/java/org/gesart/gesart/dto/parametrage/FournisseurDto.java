@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.gesart.gesart.domain.traitement.BonDeCmdeFour;
 import org.gesart.gesart.domain.traitement.Entre;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class FournisseurDto {
+public class FournisseurDto extends AbstractAuditEntityDto {
 
     private Long id;
     private String codeFour;

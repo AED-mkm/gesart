@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
- */
+ * @author : <a href="siguizana08@gmail.com"> BRAHIMA TRAORE </a>.
+ * @version : 1.0
+ **/
 
 @Repository
 @SuppressWarnings("ALL")
@@ -82,6 +83,5 @@ public interface UserRepository extends AbstractRepository<User, Long> {
      * @return Optional<User>
      */
     Optional<User> findByStatutAndActivationKey(TypeStatut statut, String activationKey);
-
 
 }

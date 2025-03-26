@@ -12,9 +12,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-/**
- * @author Moctar
- */
+
+
+
+
 @SuppressWarnings("ALL")
 @Entity
 @Data
@@ -29,12 +30,14 @@ public class AdminMail extends AbstractAuditEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_mail_seq_generator")
     @SequenceGenerator(name = "admin_mail_seq_generator", sequenceName = "seq_admin_mail",
             initialValue = 1010, allocationSize = 5)
-    @Column(name = "id")
     private Long id;
+
     @Column(name = "nom")
     private String nom;
-    @Column(name = "adresse")
-    private String adresse;
+
+    @Column(name = "adress")
+    private String adress;
+
     @Column(name = "actif")
-    private boolean actif;
+    private Boolean actif;
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.gesart.gesart.dto.admin.AbstractAuditEntityDto;
 
 import java.math.BigDecimal;
 
@@ -19,7 +20,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class TaxeDto {
+public class TaxeDto extends AbstractAuditEntityDto {
     private Long id;
     private String code;
     private String libelle;

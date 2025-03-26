@@ -8,7 +8,10 @@ import lombok.ToString;
 
 import java.util.Map;
 
-
+/**
+ * @author : <a href="mohamskab@outlook.fr">KABORE Mohamadi</a>
+ * @version : 1.0
+ **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
